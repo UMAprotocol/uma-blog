@@ -1,19 +1,20 @@
 import { getBlogEntries } from "@/lib/contentful";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { ContentfulImage } from "@/app/components/ContentfulImage";
+import { PostPreview } from "./components/PostPreview";
 
 export default async function Home() {
   const posts = await getBlogEntries();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {posts.items.map((post) => (
-        <>
-          <h2>{post.fields.title}</h2>
-          <ContentfulImage {...post.fields.heroImage} />
-          {documentToReactComponents(post.fields.content)}
-        </>
-      ))}
+    <main className="w-full p-10 min-h-screen flex-col items-center justify-between">
+      <div className="w-full flex flex-row flex-wrap gap-10">
+        {posts.items.map((post) => (
+          <PostPreview
+            className="flex-1 min-w-[300px]"
+            key={post.sys.id}
+            {...post}
+          />
+        ))}
+      </div>
     </main>
   );
 }

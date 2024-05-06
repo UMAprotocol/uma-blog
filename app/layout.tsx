@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={cn("scroll-smooth", halyardDisplay.variable)}>
-      <body className="min-h-[100 dvh] text-text">
+      <body className="min-h-[100 dvh] bg-background text-text w-screen py-10 px-6">
         <Providers>{children}</Providers>
       </body>
     </html>

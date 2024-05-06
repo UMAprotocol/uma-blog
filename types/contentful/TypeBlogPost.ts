@@ -12,6 +12,7 @@ export type TypeBlogPostFields = {
   product: EntryFieldTypes.Symbol<"optimistic oracle" | "osnap" | "oval">;
   publishDate: EntryFieldTypes.Date;
   content: EntryFieldTypes.RichText;
+  slug: EntryFieldTypes.Symbol;
 };
 
 export type TypeBlogPostSkeleton = EntrySkeletonType<

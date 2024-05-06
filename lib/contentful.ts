@@ -2,7 +2,7 @@ import { env } from "@/app/env";
 import { TypeBlogPostSkeleton } from "@/types/contentful";
 import { createClient } from "contentful";
 
-const client = createClient({
+export const client = createClient({
   space: env.SPACE_ID,
   accessToken: env.ACCESS_TOKEN,
 });
@@ -13,6 +13,25 @@ export async function getBlogEntries() {
     "fields.content[exists]": true,
   });
   return entries;
+}
+
+export async function getBlogPostBySlug(slug: UmaBlogEntry["fields"]["slug"]) {
+  const options = {
+    content_type: "blogPost",
+    "fields.slug[match]": slug,
+  } as const;
+  const entries = await client.getEntries<TypeBlogPostSkeleton>(options);
+  return entries.items[0];
+}
+
+export async function getAllBlogSlugs() {
+  const options = {
+    content_type: "blogPost",
+    select: "fields.slug",
+  } as const;
+
+  const entries = await client.getEntries<TypeBlogPostSkeleton>(options);
+  return entries.items;
 }
 
 // Since we might chain multiple modifiers on the client,
