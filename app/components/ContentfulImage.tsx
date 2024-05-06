@@ -1,19 +1,25 @@
-import { Asset, AssetDetails } from "contentful";
+import { UmaBlogEntry } from "@/lib/contentful";
+import { hasNoNullValues } from "@/types/utils";
 import Image from "next/image";
 
-type ContentfulImageProps = Asset & {
+type ContentfulImageProps = UmaBlogEntry["fields"]["heroImage"] & {
   className?: string;
 };
 
+// TODO: run type guards on whole posts at top-level
 export function ContentfulImage({ className, ...props }: ContentfulImageProps) {
+  if (!("fields" in props && hasNoNullValues(props.fields))) {
+    return;
+  }
+
   const { description, file } = props.fields;
 
   return (
     <Image
-      alt={description as string}
-      width={(file?.details as AssetDetails)?.image?.width as number}
-      height={(file?.details as AssetDetails)?.image?.height as number}
-      src={`https:${file?.url}`}
+      alt={description}
+      width={file.details.image?.width}
+      height={file.details.image?.height}
+      src={`https:${file.url}`}
       className={className}
       {...props}
     />

@@ -8,7 +8,6 @@
     "next",
     "next/core-web-vitals",
     "eslint:recommended",
-    "plugin:storybook/recommended",
     "plugin:@typescript-eslint/strict-type-checked",
     "plugin:@typescript-eslint/stylistic-type-checked"
   ],

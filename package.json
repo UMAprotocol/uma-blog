@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "setup": "tsx ./lib/setup.ts",
     "clean": "rm -rf node_modules && rm -rf .next",
     "format": "prettier --write './**/*.{js,mjs,jsx,ts,tsx,css,md,json}' --config ./prettier.config.mjs",
     "dev": "next dev",
@@ -15,13 +16,17 @@
     "@contentful/rich-text-react-renderer": "^15.19.6",
     "@contentful/rich-text-types": "^16.3.5",
     "@t3-oss/env-nextjs": "^0.10.1",
+    "@tailwindcss/typography": "^0.5.13",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "cf-content-types-generator": "^2.15.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "contentful": "^10.9.2",
+    "date-fns": "^3.6.0",
     "lucide-react": "^0.378.0",
     "next": "14.2.3",
     "next-themes": "^0.3.0",
+    "prettier": "^3.2.5",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.3.0",
@@ -40,6 +45,7 @@
     "lint-staged": "^15.2.2",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.9.3",
     "typescript": "^5"
   }
 }
