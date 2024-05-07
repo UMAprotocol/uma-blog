@@ -21,7 +21,7 @@ export function PostPreview({ className, ...post }: Props) {
           {...post.fields.heroImage}
         />
       </div>
-      <div className="flex gap-2 items-center">
+      <div className="flex flex-wrap gap-2 items-center">
         {post.fields.tags.map((tag) => (
           <Badge key={tag}>{tag}</Badge>
         ))}
