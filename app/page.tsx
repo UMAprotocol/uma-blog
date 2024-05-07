@@ -1,8 +1,10 @@
 import { getBlogEntries } from "@/lib/contentful";
 import { PostPreview } from "@/components/PostPreview";
+import { draftMode } from "next/headers";
 
 export default async function Home() {
-  const posts = await getBlogEntries();
+  const { isEnabled } = draftMode();
+  const posts = await getBlogEntries(isEnabled);
 
   return (
     <div className="w-full relative min-h-screen px-page-padding-x flex-col items-center justify-between">

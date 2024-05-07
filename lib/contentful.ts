@@ -4,12 +4,19 @@ import { createClient } from "contentful";
 
 const contentType = "blogPost";
 
-export const client = createClient({
+export const productionClient = createClient({
   space: env.SPACE_ID,
   accessToken: env.ACCESS_TOKEN,
 });
 
-export async function getBlogEntries() {
+export const previewClient = createClient({
+  space: env.SPACE_ID,
+  accessToken: env.PREVIEW_ACCESS_TOKEN,
+  host: "preview.contentful.com",
+});
+
+export async function getBlogEntries(isDraft: boolean) {
+  const client = isDraft ? previewClient : productionClient;
   const entries = await client.getEntries<TypeBlogPostSkeleton>({
     content_type: contentType,
     "fields.content[exists]": true,
@@ -17,16 +24,23 @@ export async function getBlogEntries() {
   return entries;
 }
 
-export async function getBlogPostBySlug(slug: UmaBlogEntry["fields"]["slug"]) {
+export async function getBlogPostBySlug(
+  slug: UmaBlogEntry["fields"]["slug"],
+  isDraft: boolean,
+) {
+  const client = isDraft ? previewClient : productionClient;
   const options = {
     content_type: contentType,
+    limit: 1,
     "fields.slug[match]": slug,
   } as const;
   const entries = await client.getEntries<TypeBlogPostSkeleton>(options);
   return entries.items[0];
 }
 
-export async function getAllBlogSlugs() {
+export async function getAllBlogSlugs(isDraft: boolean) {
+  const client = isDraft ? previewClient : productionClient;
+
   const options = {
     content_type: contentType,
     select: "fields.slug",
