@@ -13,6 +13,7 @@ export type TypeBlogPostFields = {
   publishDate: EntryFieldTypes.Date;
   content: EntryFieldTypes.RichText;
   slug: EntryFieldTypes.Symbol;
+  tags: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
 };
 
 export type TypeBlogPostSkeleton = EntrySkeletonType<
