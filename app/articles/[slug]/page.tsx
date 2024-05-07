@@ -1,4 +1,4 @@
-import { ContentfulImage } from "@/app/components/ContentfulImage";
+import { ContentfulImage } from "@/components/ContentfulImage";
 import { getAllBlogSlugs, getBlogPostBySlug } from "@/lib/contentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
@@ -19,7 +19,7 @@ export default async function BlogPage({ params: { slug } }: Props) {
   const post = await getBlogPostBySlug(slug);
 
   return (
-    <article className="flex-1 text-text flex-col gap-2 items-start">
+    <article className="flex-1 px-page-padding-x text-text flex-col gap-2 items-start">
       <div className="w-full max-w-[400px] relative aspect-[3/2] rounded-xl overflow-hidden">
         <ContentfulImage
           fill
@@ -27,7 +27,7 @@ export default async function BlogPage({ params: { slug } }: Props) {
           {...post.fields.heroImage}
         />
       </div>
-      <h1 className="text-4xl text-text mb-8">{post.fields.title}</h1>
+      <h1 className="text-4xl text-text-secondary mb-8">{post.fields.title}</h1>
       {documentToReactComponents(post.fields.content)}
     </article>
   );

@@ -2,6 +2,8 @@ import { env } from "@/app/env";
 import { TypeBlogPostSkeleton } from "@/types/contentful";
 import { createClient } from "contentful";
 
+const contentType = "blogPost";
+
 export const client = createClient({
   space: env.SPACE_ID,
   accessToken: env.ACCESS_TOKEN,
@@ -9,7 +11,7 @@ export const client = createClient({
 
 export async function getBlogEntries() {
   const entries = await client.getEntries<TypeBlogPostSkeleton>({
-    content_type: "blogPost",
+    content_type: contentType,
     "fields.content[exists]": true,
   });
   return entries;
@@ -17,7 +19,7 @@ export async function getBlogEntries() {
 
 export async function getBlogPostBySlug(slug: UmaBlogEntry["fields"]["slug"]) {
   const options = {
-    content_type: "blogPost",
+    content_type: contentType,
     "fields.slug[match]": slug,
   } as const;
   const entries = await client.getEntries<TypeBlogPostSkeleton>(options);
@@ -26,7 +28,7 @@ export async function getBlogPostBySlug(slug: UmaBlogEntry["fields"]["slug"]) {
 
 export async function getAllBlogSlugs() {
   const options = {
-    content_type: "blogPost",
+    content_type: contentType,
     select: "fields.slug",
   } as const;
 

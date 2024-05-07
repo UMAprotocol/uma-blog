@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { autoFit } from "./styles/plugins";
 
 const config = {
   darkMode: ["class"],
@@ -18,40 +19,26 @@ const config = {
       },
     },
     extend: {
+      spacing: {
+        "page-padding-x": "var(--page-padding-x)",
+      },
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        text: "hsl(var(--text-color))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+        border: "hsl(var(--border) / <alpha-value>)",
+        input: "hsl(var(--input) / <alpha-value>)",
+        ring: "hsl(var(--ring) / <alpha-value>)",
+        background: {
+          DEFAULT: "hsl(var(--background-primary) / <alpha-value>)",
+          secondary: "hsl(var(--background-secondary) / <alpha-value>)",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+        text: {
+          DEFAULT: "hsl(var(--text-primary) / <alpha-value>)",
+          secondary: "hsl(var(--text-primary) / <alpha-value>)",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
+        foreground: "hsl(var(--foreground) / <alpha-value>)",
+        accent: "hsl(var(--accent) / <alpha-value>)",
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "hsl(var(--popover) / <alpha-value>)",
+          secondary: "hsl(var(--popover-secondary) / <alpha-value>)",
         },
       },
       borderRadius: {
@@ -73,9 +60,12 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      fontFamily: {
+        sans: ["var(--font-halyard-display)", "sans-serif"],
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), autoFit],
 } satisfies Config;
 
 export default config;
