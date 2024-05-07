@@ -11,7 +11,7 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: "/articles/:slug*",
+        source: "/:path*",
         headers: [
           {
             key: "Content-Security-Policy",
