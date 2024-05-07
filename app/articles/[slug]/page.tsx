@@ -1,10 +1,5 @@
 import { ContentfulImage } from "@/app/components/ContentfulImage";
-import {
-  UmaBlogEntry,
-  getAllBlogSlugs,
-  getBlogPostBySlug,
-} from "@/lib/contentful";
-import { hasNoNullValues } from "@/types/utils";
+import { getAllBlogSlugs, getBlogPostBySlug } from "@/lib/contentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 export async function generateStaticParams() {
