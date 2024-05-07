@@ -7,6 +7,19 @@ jiti("./app/env");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  headers() {
+    return [
+      {
+        source: "/articles/:slug*",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: "frame-ancestors https://app.contentful.com", // alow the app to be embedded as an iframe for live previews
+          },
+        ],
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
