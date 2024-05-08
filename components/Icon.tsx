@@ -6,7 +6,7 @@ type Props = React.ComponentPropsWithoutRef<"svg"> & {
 export function Icon({ name, className, ...props }: Props) {
   return (
     <svg className={className} {...props}>
-      <use href={`icons.svg#${name}`} />
+      <use href={`/icons.svg#${name}`} />
     </svg>
   );
 }

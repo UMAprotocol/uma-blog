@@ -23,7 +23,11 @@ export default async function BlogPage({ params: { slug } }: Props) {
 
   return (
     <>
-      {isEnabled && <Link href="/api/disable-draft">Exit draft Mode</Link>}
+      {isEnabled && (
+        <Link prefetch={false} href="/api/disable-draft">
+          Exit draft Mode
+        </Link>
+      )}
       <article className="flex-1 px-page-padding-x text-text flex-col gap-2 items-start">
         <div className="w-full max-w-[400px] relative aspect-[3/2] rounded-xl overflow-hidden">
           <ContentfulImage
