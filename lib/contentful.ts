@@ -1,5 +1,6 @@
 import { env } from "@/app/env";
 import { TypeBlogPostSkeleton } from "@/types/contentful";
+import { HasFields } from "@/types/utils";
 import { createClient } from "contentful";
 
 const contentType = "blogPost";
@@ -17,10 +18,11 @@ export const previewClient = createClient({
 
 export async function getBlogEntries(isDraft: boolean) {
   const client = isDraft ? previewClient : productionClient;
-  const entries = await client.getEntries<TypeBlogPostSkeleton>({
-    content_type: contentType,
-    "fields.content[exists]": true,
-  });
+  const entries =
+    await client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>({
+      content_type: contentType,
+      "fields.content[exists]": true,
+    });
   return entries;
 }
 
@@ -34,7 +36,10 @@ export async function getBlogPostBySlug(
     limit: 1,
     "fields.slug[match]": slug,
   } as const;
-  const entries = await client.getEntries<TypeBlogPostSkeleton>(options);
+  const entries =
+    await client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
+      options,
+    );
   return entries.items[0];
 }
 
@@ -46,7 +51,10 @@ export async function getAllBlogSlugs(isDraft: boolean) {
     select: "fields.slug",
   } as const;
 
-  const entries = await client.getEntries<TypeBlogPostSkeleton>(options);
+  const entries =
+    await client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
+      options,
+    );
   return entries.items;
 }
 
@@ -54,3 +62,7 @@ export async function getAllBlogSlugs(isDraft: boolean) {
 // it is more accurate to infer the response types
 export type UmaBlogEntries = Awaited<ReturnType<typeof getBlogEntries>>;
 export type UmaBlogEntry = UmaBlogEntries["items"][number];
+
+export type UmaBlogImageAsset = UmaBlogEntry["fields"]["heroImage"];
+
+export type ImageWithFields = HasFields<UmaBlogImageAsset>;

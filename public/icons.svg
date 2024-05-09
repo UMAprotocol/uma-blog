@@ -94,5 +94,18 @@
         d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
       />
     </symbol>
+
+    <svg
+      id="arrow_up_right"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 11 10"
+    >
+      <path
+        stroke="currentColor"
+        stroke-width="1.5"
+        d="M1.272.757h8.485m0 0v8.486m0-8.486L1.272 9.243"
+      />
+    </svg>
   </defs>
 </svg>

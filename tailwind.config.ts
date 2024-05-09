@@ -32,7 +32,7 @@ const config = {
         },
         text: {
           DEFAULT: "hsl(var(--text-primary) / <alpha-value>)",
-          secondary: "hsl(var(--text-primary) / <alpha-value>)",
+          secondary: "hsl(var(--text-secondary) / <alpha-value>)",
         },
         foreground: "hsl(var(--foreground) / <alpha-value>)",
         accent: "hsl(var(--accent) / <alpha-value>)",
