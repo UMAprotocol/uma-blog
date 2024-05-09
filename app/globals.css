@@ -5,6 +5,7 @@
 @layer base {
   :root {
     --page-padding-x: 12px;
+    --content-max-width: 1000px;
 
     --background-primary: 0 0% 100%;
     --background-secondary: 0 0% 95%;
@@ -35,7 +36,7 @@
 
     --accent: 0 100% 65%;
 
-    --border: 0 0% 14.9%;
+    --border: 280 3% 23%;
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
   }

@@ -21,6 +21,7 @@ const config = {
     extend: {
       spacing: {
         "page-padding-x": "var(--page-padding-x)",
+        "content-max-width": "var(--content-max-width)",
       },
       colors: {
         border: "hsl(var(--border) / <alpha-value>)",
@@ -65,7 +66,11 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), autoFit],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/container-queries"),
+    autoFit,
+  ],
 } satisfies Config;
 
 export default config;
