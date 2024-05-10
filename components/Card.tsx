@@ -36,6 +36,21 @@ const textBoxVariants = cva(
   },
 );
 
+const rootVariants = cva(
+  "group card hover:border-text/50 transition-colors gap-6 p-4 @xl:p-5 ",
+  {
+    variants: {
+      size: {
+        small: "shadow-md",
+        large: "shadow-xl",
+      },
+    },
+    defaultVariants: {
+      size: "small",
+    },
+  },
+);
+
 type CardProps = {
   post: UmaBlogEntry;
   className?: string;
@@ -44,13 +59,7 @@ type CardProps = {
 
 export function Card({ post, size, className, ...props }: CardProps) {
   return (
-    <Link
-      className={cn(
-        "group card hover:border-text/50 transition-colors gap-6 p-5 ",
-        className,
-      )}
-      {...props}
-    >
+    <Link className={cn(rootVariants({ size, className }))} {...props}>
       <div className="gap-6 grid grid-cols-9">
         <ContentfulImageWrapped
           zoomOnHover
