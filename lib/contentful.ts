@@ -1,7 +1,10 @@
 import { env } from "@/app/env";
 import { TypeBlogPostSkeleton } from "@/types/contentful";
 import { HasFields } from "@/types/utils";
+import { documentToPlainTextString } from "@contentful/rich-text-plain-text-renderer";
+import { Document } from "@contentful/rich-text-types";
 import { createClient } from "contentful";
+import words from "lodash.words";
 
 const contentType = "blogPost";
 
@@ -66,3 +69,12 @@ export type UmaBlogEntry = UmaBlogEntries["items"][number];
 export type UmaBlogImageAsset = UmaBlogEntry["fields"]["heroImage"];
 
 export type ImageWithFields = HasFields<UmaBlogImageAsset>;
+
+const averageReadingSpeed = 238; //words per minute
+
+export function getReadingTimeMinutes(document: Document) {
+  const rawText = documentToPlainTextString(document);
+  const wordCount = words(rawText).length;
+  const readingTimeMinutes = Math.round(wordCount / averageReadingSpeed);
+  return readingTimeMinutes;
+}

@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@contentful/rich-text-plain-text-renderer':
+    specifier: ^16.0.13
+    version: 16.0.13
   '@contentful/rich-text-react-renderer':
     specifier: ^15.19.6
     version: 15.19.6(react-dom@18.3.1)(react@18.3.1)
@@ -26,6 +29,9 @@ dependencies:
   '@tailwindcss/container-queries':
     specifier: ^0.1.1
     version: 0.1.1(tailwindcss@3.4.3)
+  '@types/lodash.words':
+    specifier: ^4.2.9
+    version: 4.2.9
   '@typescript-eslint/eslint-plugin':
     specifier: ^7.8.0
     version: 7.8.0(@typescript-eslint/parser@7.2.0)(eslint@8.57.0)(typescript@5.4.5)
@@ -44,6 +50,9 @@ dependencies:
   date-fns:
     specifier: ^3.6.0
     version: 3.6.0
+  lodash.words:
+    specifier: ^4.2.0
+    version: 4.2.0
   lucide-react:
     specifier: ^0.378.0
     version: 0.378.0(react@18.3.1)
@@ -131,6 +140,13 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@contentful/rich-text-plain-text-renderer@16.0.13:
+    resolution: {integrity: sha512-r1w9NjxRAf275G7vtI9EiWVA5fWHXSCdx6yUYPsIxR2eHtwjswDG6QrmHeTBOuyKYPdEFtHUWTo6KTGGd0SYZg==}
+    engines: {node: '>=6.0.0'}
+    dependencies:
+      '@contentful/rich-text-types': 16.3.5
+    dev: false
 
   /@contentful/rich-text-react-renderer@15.19.6(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-SPpkr2uSyirsN/uUaek8djqLMGP8nPqSqxoQ8M0VJcfD9+INKK56vjmteNr5dBbqAZO/PJMxT1S8to9BndpinQ==}
@@ -1191,6 +1207,16 @@ packages:
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
+
+  /@types/lodash.words@4.2.9:
+    resolution: {integrity: sha512-t7jYEhzm/JJxYZzU4BNeySF9zXOQwtd5t1pJBcK9ZZf62HUbcFuiLN69G5N9A/QUmE44OsBVrmZcAxbnWm0IXg==}
+    dependencies:
+      '@types/lodash': 4.17.1
+    dev: false
+
+  /@types/lodash@4.17.1:
+    resolution: {integrity: sha512-X+2qazGS3jxLAIz5JDXDzglAF3KpijdhFxlf/V1+hEsOUc+HnWi81L/uv/EvGuV90WY+7mPGFCUDGfQC3Gj95Q==}
+    dev: false
 
   /@types/node@20.12.8:
     resolution: {integrity: sha512-NU0rJLJnshZWdE/097cdCBbyW1h4hEg0xpovcoAQYHl8dnEyp/NAOiE45pvc+Bd1Dt+2r94v2eGFpQJ4R7g+2w==}
@@ -3700,6 +3726,10 @@ packages:
 
   /lodash.startcase@4.4.0:
     resolution: {integrity: sha512-+WKqsK294HMSc2jEbNgpHpd0JfIBhp7rEV4aqXWqFr6AlXov+SlcgB1Fv01y2kGe3Gc8nMW7VA0SrGuSkRfIEg==}
+    dev: false
+
+  /lodash.words@4.2.0:
+    resolution: {integrity: sha512-mXxqd8Yx9BGPij3lZKFSdOsjOTbL4krbCCp9slEozaN4EMppA2dFmK/f8HeohodprY6W0vOdiQ5WFgPaTI75xQ==}
     dev: false
 
   /lodash@4.17.21:

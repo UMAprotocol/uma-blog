@@ -4,7 +4,8 @@ import { VariantProps, cva } from "class-variance-authority";
 import { Badge } from "./ui/badge";
 import { ContentfulImageWrapped } from "./ContentfulImage/ContentfulImageWrapped";
 import Link, { LinkProps } from "next/link";
-import { format } from "date-fns";
+import { PublishDate } from "./PublishDate";
+import { ReadingTime } from "./ReadingTime";
 
 const imageVariants = cva(
   "w-full self-stretch col-start-1 col-end-10 rounded-sm",
@@ -27,7 +28,8 @@ const textBoxVariants = cva(
     variants: {
       size: {
         small: "[&_h2]:text-base @xl:row-start-1 @xl:col-start-1 @xl:col-end-5",
-        large: "[&_h2]:text-2xl @xl:row-start-1 @xl:col-start-6 @xl:col-end-10",
+        large:
+          "[&_h2]:text-2xl [&_h2]:line-clamp-3 @xl:row-start-1 @xl:col-start-6 @xl:col-end-10",
       },
     },
     defaultVariants: {
@@ -37,7 +39,7 @@ const textBoxVariants = cva(
 );
 
 const rootVariants = cva(
-  "group card hover:border-text/50 transition-colors gap-6 p-4 @xl:p-5 ",
+  "group card hover:border-text/50 transition-colors gap-6 p-4 @2xl:p-5 ",
   {
     variants: {
       size: {
@@ -68,10 +70,10 @@ export function Card({ post, size, className, ...props }: CardProps) {
         />
         <div className={cn(textBoxVariants({ size }))}>
           <div className="flex flex-col items-start justify-start gap-2">
-            <div className="flex items-center gap-2 font-light text-xs tracking-widest leading-4 uppercase text-text-secondary">
-              <div className="">{format(post.fields.publishDate, "PP")}</div>
+            <div className="flex items-center gap-2">
+              <PublishDate publishDate={post.fields.publishDate} />
               <span className="rounded-[50%] bg-text-secondary/50 w-[2px] h-[2px]" />
-              <div>12 min read </div>
+              <ReadingTime document={post.fields.content} />
             </div>
 
             {/* TODO: reading time & Publish date */}
