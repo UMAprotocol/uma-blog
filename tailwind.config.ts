@@ -30,6 +30,7 @@ const config = {
         background: {
           DEFAULT: "hsl(var(--background-primary) / <alpha-value>)",
           secondary: "hsl(var(--background-secondary) / <alpha-value>)",
+          card: "hsl(var(--text-primary) / 0.03)",
         },
         text: {
           DEFAULT: "hsl(var(--text-primary) / <alpha-value>)",

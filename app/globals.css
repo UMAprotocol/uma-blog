@@ -60,4 +60,7 @@
   body {
     @apply bg-background text-foreground;
   }
+  .card {
+    @apply border border-background-card shadow-sm rounded-xl bg-background-card backdrop-blur-xl;
+  }
 }

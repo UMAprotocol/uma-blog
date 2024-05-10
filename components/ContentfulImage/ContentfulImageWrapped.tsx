@@ -2,6 +2,7 @@ import { UmaBlogImageAsset } from "@/lib/contentful";
 import { isContentfulAsset } from "@/types/utils";
 import { ContentfulImage } from "./ContentfulImage";
 import { cn } from "@/lib/utils";
+import { PlaceholderBlogImage } from "../PlaceholderBlogImage";
 
 export type ContentfulImageWrappedProps = {
   image: UmaBlogImageAsset;
@@ -15,7 +16,18 @@ export function ContentfulImageWrapped({
   zoomOnHover = false,
 }: ContentfulImageWrappedProps) {
   if (!isContentfulAsset(image)) {
-    return null;
+    return (
+      <PlaceholderBlogImage
+        className={cn(
+          "relative aspect-[3/2] overflow-hidden",
+          {
+            "[&>svg]:transition-transform [&>svg]:group-hover:scale-110 ":
+              zoomOnHover,
+          },
+          className,
+        )}
+      />
+    );
   }
 
   return (

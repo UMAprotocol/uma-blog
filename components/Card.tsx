@@ -6,19 +6,32 @@ import { ContentfulImageWrapped } from "./ContentfulImage/ContentfulImageWrapped
 import Link, { LinkProps } from "next/link";
 import { format } from "date-fns";
 
-//  TODO: sort out large card styles
-const cardVariants = cva(
-  "border border-text/5 rounded-lg group hover:border-text/50 transition-colors bg-text/5 backdrop-blur-xl gap-6 p-4 shadow-sm rounded-xl ",
+const imageVariants = cva(
+  "w-full self-stretch col-start-1 col-end-10 rounded-sm",
   {
     variants: {
       size: {
-        default: "",
-        large: "",
+        small: "@xl:row-start-1 aspect-[2/1] @xl:col-start-6 @xl:col-end-10",
+        large: "@xl:row-start-1 aspect-[1.7/1] @xl:col-start-1 @xl:col-end-6",
       },
     },
-
     defaultVariants: {
-      size: "default",
+      size: "small",
+    },
+  },
+);
+
+const textBoxVariants = cva(
+  "flex flex-col flex-1 col-start-1 col-end-10 self-stretch gap-4 justify-between",
+  {
+    variants: {
+      size: {
+        small: "[&_h2]:text-base @xl:row-start-1 @xl:col-start-1 @xl:col-end-5",
+        large: "[&_h2]:text-2xl @xl:row-start-1 @xl:col-start-6 @xl:col-end-10",
+      },
+    },
+    defaultVariants: {
+      size: "small",
     },
   },
 );
@@ -27,17 +40,24 @@ type CardProps = {
   post: UmaBlogEntry;
   className?: string;
 } & LinkProps &
-  VariantProps<typeof cardVariants>;
+  VariantProps<typeof imageVariants>;
 
 export function Card({ post, size, className, ...props }: CardProps) {
   return (
-    <Link className={cn(cardVariants({ size, className }))} {...props}>
-      <div className="flex flex-1 flex-col gap-6 @xl:justify-between @xl:flex-row-reverse @xl:gap-5">
+    <Link
+      className={cn(
+        "group card hover:border-text/50 transition-colors gap-6 p-5 ",
+        className,
+      )}
+      {...props}
+    >
+      <div className="gap-6 grid grid-cols-9">
         <ContentfulImageWrapped
-          className="w-full aspect-[4/2] @xl:max-w-[35%] rounded-sm"
+          zoomOnHover
+          className={cn(imageVariants({ size }))}
           image={post.fields.heroImage}
         />
-        <div className="flex flex-col flex-1 gap-4 justify-between @xl:max-w-[50%]">
+        <div className={cn(textBoxVariants({ size }))}>
           <div className="flex flex-col items-start justify-start gap-2">
             <div className="flex items-center gap-2 font-light text-xs tracking-widest leading-4 uppercase text-text-secondary">
               <div className="">{format(post.fields.publishDate, "PP")}</div>
@@ -46,9 +66,7 @@ export function Card({ post, size, className, ...props }: CardProps) {
             </div>
 
             {/* TODO: reading time & Publish date */}
-            <h2 className="text-text text-base line-clamp-2">
-              {post.fields.title}
-            </h2>
+            <h2 className="text-text line-clamp-2">{post.fields.title}</h2>
           </div>
 
           <div className="flex flex-wrap gap-2 items-center justify-start">

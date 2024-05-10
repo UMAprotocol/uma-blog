@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("scroll-smooth", halyardDisplay.variable)}>
       <body className="min-h-[100 dvh] items-center flex flex-col bg-background text-text w-screen">
-        <main className="w-full m-x-auto items-center flex flex-col h-full max-w-[1400px]">
+        <main className="w-full m-x-auto items-center pb-8 flex flex-col h-full max-w-[1400px]">
           <Providers>
             <>
               <Header />
