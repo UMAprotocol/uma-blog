@@ -19,17 +19,35 @@ const markRenderers: RenderMark = {
 
 const nodeRenderers: RenderNode = {
   [BLOCKS.DOCUMENT]: (_, children) => children,
-  [BLOCKS.PARAGRAPH]: (_, children) => <p>{children}</p>,
-  [BLOCKS.HEADING_1]: (_, children) => <h1 className="text-4xl">{children}</h1>,
-  [BLOCKS.HEADING_2]: (_, children) => <h2 className="text-3xl">{children}</h2>,
-  [BLOCKS.HEADING_3]: (_, children) => <h3 className="text-2xl">{children}</h3>,
-  [BLOCKS.HEADING_4]: (_, children) => <h4 className="text-xl">{children}</h4>,
-  [BLOCKS.HEADING_5]: (_, children) => <h5>{children}</h5>,
-  [BLOCKS.HEADING_6]: (_, children) => <h6>{children}</h6>,
+  [BLOCKS.PARAGRAPH]: (_, children) => (
+    <p className="text-text/75 text-lg tracking-wider font-light">{children}</p>
+  ),
+  [BLOCKS.HEADING_1]: (_, children) => (
+    <h1 className="text-4xl text-text">{children}</h1>
+  ),
+  [BLOCKS.HEADING_2]: (_, children) => (
+    <h2 className="text-3xl text-text">{children}</h2>
+  ),
+  [BLOCKS.HEADING_3]: (_, children) => (
+    <h3 className="text-2xl text-text">{children}</h3>
+  ),
+  [BLOCKS.HEADING_4]: (_, children) => (
+    <h4 className="text-xl text-text">{children}</h4>
+  ),
+  [BLOCKS.HEADING_5]: (_, children) => (
+    <h5 className="text-xl text-text">{children}</h5>
+  ),
+  [BLOCKS.HEADING_6]: (_, children) => (
+    <h6 className="text-xl text-text">{children}</h6>
+  ),
   [BLOCKS.EMBEDDED_ENTRY]: (_, children) => <div>{children}</div>,
   [BLOCKS.EMBEDDED_RESOURCE]: (_, children) => <div>{children}</div>,
-  [BLOCKS.UL_LIST]: (_, children) => <ul>{children}</ul>,
-  [BLOCKS.OL_LIST]: (_, children) => <ol>{children}</ol>,
+  [BLOCKS.UL_LIST]: (_, children) => (
+    <ul className="list-disc pl-8">{children}</ul>
+  ),
+  [BLOCKS.OL_LIST]: (_, children) => (
+    <ol className="list-decimal pl-8">{children}</ol>
+  ),
   [BLOCKS.LIST_ITEM]: (_, children) => <li>{children}</li>,
   [BLOCKS.QUOTE]: (_, children) => <blockquote>{children}</blockquote>,
   [BLOCKS.HR]: () => <hr />,

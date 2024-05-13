@@ -21,11 +21,15 @@ export const previewClient = createClient({
 
 export async function getBlogEntries(isDraft: boolean) {
   const client = isDraft ? previewClient : productionClient;
+  const options = {
+    content_type: contentType,
+    "fields.content[exists]": true,
+    order: "-fields.publishDate", // sorted latest first
+  } as const;
   const entries =
-    await client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>({
-      content_type: contentType,
-      "fields.content[exists]": true,
-    });
+    await client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
+      options,
+    );
   return entries;
 }
 

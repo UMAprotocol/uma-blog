@@ -2,13 +2,14 @@ import { getBlogEntries } from "@/lib/contentful";
 import { draftMode } from "next/headers";
 import { Card } from "@/components/Card";
 import { Divider } from "@/components/Divider";
+import { Subscribe } from "./Subscribe";
 
 export default async function Home() {
   const { isEnabled } = draftMode();
   const posts = await getBlogEntries(isEnabled);
 
   return (
-    <div className="w-full relative @container min-h-screen max-w-content-max-width px-page-padding-x grid items-center gap-8">
+    <div className="w-full pt-10 relative @container min-h-screen max-w-content-max-width px-page-padding-x grid items-center gap-8">
       <div className="grid grid-cols-5 gap-6">
         <Card
           size="large"
@@ -17,12 +18,7 @@ export default async function Home() {
           key={posts.items[0].sys.id}
           post={posts.items[0]}
         />
-        <div className="col-span-5 @3xl:aspect-square self-auto @3xl:col-span-1 flex flex-col items-center justify-evenly p-4 text-center card">
-          <p className="text-md text-text-secondary">
-            Get UMA updates straight to your inbox
-          </p>
-          <p className="text-accent text-md">Subscribe Now</p>
-        </div>
+        <Subscribe className="col-span-5 @3xl:aspect-square self-auto @3xl:col-span-1" />
       </div>
 
       <Divider />

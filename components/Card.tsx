@@ -39,7 +39,7 @@ const textBoxVariants = cva(
 );
 
 const rootVariants = cva(
-  "group card hover:border-text/50 transition-colors gap-6 p-4 @2xl:p-5 ",
+  "group card hover:border-text transition-colors gap-6 p-4 @2xl:p-5 ",
   {
     variants: {
       size: {

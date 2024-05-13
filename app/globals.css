@@ -60,6 +60,9 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer components {
   .card {
     @apply border border-background-card shadow-sm rounded-xl bg-background-card backdrop-blur-xl;
   }

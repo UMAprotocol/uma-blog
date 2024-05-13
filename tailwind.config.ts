@@ -27,6 +27,10 @@ const config = {
         border: "hsl(var(--border) / <alpha-value>)",
         input: "hsl(var(--input) / <alpha-value>)",
         ring: "hsl(var(--ring) / <alpha-value>)",
+        "line-pattern": {
+          background: "hsl(var(--text-primary) / 0.03)",
+          line: "hsl(var(--text-secondary) / 100)",
+        },
         background: {
           DEFAULT: "hsl(var(--background-primary) / <alpha-value>)",
           secondary: "hsl(var(--background-secondary) / <alpha-value>)",

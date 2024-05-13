@@ -3,6 +3,19 @@ import { getAllBlogSlugs, getBlogPostBySlug } from "@/lib/contentful";
 import { draftMode } from "next/headers";
 import Link from "next/link";
 import { renderDocumentText } from "@/components/RichText/RenderDocumentText";
+import { Subscribe } from "@/app/Subscribe";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { PublishDate } from "@/components/PublishDate";
+import { ReadingTime } from "@/components/ReadingTime";
+import { Badge } from "@/components/ui/badge";
+import { Divider } from "@/components/Divider";
 
 export async function generateStaticParams() {
   const posts = await getAllBlogSlugs(false);
@@ -32,20 +45,49 @@ export default async function BlogPage({ params: { slug } }: Props) {
           Exit draft Mode
         </Link>
       )}
-      <article className="flex-1 px-page-padding-x text-text flex-col gap-2 items-start">
-        <div className="w-full max-w-[400px] relative aspect-[3/2] rounded-xl overflow-hidden">
+      <div className="w-full pt-10 relative @container min-h-screen max-w-content-max-width px-page-padding-x grid items-center gap-8">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{post.fields.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+        <div className="grid grid-cols-5 gap-6">
           <ContentfulImageWrapped
-            className="w-full aspect-[3/2] rounded-xl"
+            className="col-span-5 @3xl:col-span-4 aspect-[1.8/1] rounded-xl"
             image={post.fields.heroImage}
           />
+          <Subscribe className="col-span-5 @3xl:aspect-square self-auto @3xl:col-span-1" />
+
+          <article className="col-span-5 flex @3xl:col-span-4 text-text flex-col gap-6 items-start">
+            <div className="flex flex-col items-start gap-6">
+              <div className="flex items-center gap-2">
+                <PublishDate publishDate={post.fields.publishDate} />
+                <span className="rounded-[50%] bg-text-secondary/50 w-[2px] h-[2px]" />
+                <ReadingTime document={post.fields.content} />
+              </div>
+              <h1 className="text-5xl capitalize text-text">
+                {post.fields.title}
+              </h1>
+
+              <div className="flex flex-wrap gap-2 items-center justify-start">
+                {post.fields.tags.map((tag) => (
+                  <Badge key={tag}>{tag}</Badge>
+                ))}
+              </div>
+            </div>
+
+            <Divider className="my-10" />
+
+            {renderDocumentText(post.fields.content)}
+          </article>
         </div>
-        <h1 className="text-4xl text-text-secondary mb-8">
-          {post.fields.title}
-        </h1>
-        <div className="flex flex-col gap-4">
-          {renderDocumentText(post.fields.content)}
-        </div>
-      </article>
+      </div>
     </>
   );
 }
