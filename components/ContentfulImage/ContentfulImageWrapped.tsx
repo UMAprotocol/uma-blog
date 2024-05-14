@@ -17,24 +17,29 @@ export function ContentfulImageWrapped({
 }: ContentfulImageWrappedProps) {
   if (!isContentfulAsset(image)) {
     return (
-      <PlaceholderBlogImage
-        className={cn(
-          "relative aspect-[3/2] overflow-hidden",
-          {
+      <div className={cn("relative aspect-[3/2] overflow-hidden", className)}>
+        <PlaceholderBlogImage
+          className={cn("relative aspect-[3/2] overflow-hidden", {
             "[&>svg]:transition-transform [&>svg]:group-hover:scale-110 ":
               zoomOnHover,
-          },
-          className,
-        )}
-      />
+          })}
+        />
+      </div>
     );
   }
+
   return (
-    <div className={cn("relative aspect-[3/2] overflow-hidden", className)}>
+    <div
+      className={cn(
+        "relative border border-background-card aspect-[3/2] overflow-hidden",
+        className,
+      )}
+    >
       <ContentfulImage
         fill
         className={cn({
-          "transition-transform group-hover:scale-110": zoomOnHover,
+          "transition-transform object-cover group-hover:scale-110":
+            zoomOnHover,
         })}
         {...image}
       />
