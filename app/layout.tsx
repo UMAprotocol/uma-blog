@@ -22,15 +22,13 @@ export default function RootLayout({
       lang="en"
       className={cn("scroll-smooth", halyardDisplay.variable)}
     >
-      <body className="min-h-[100 dvh] items-center flex flex-col bg-background text-text w-screen">
-        <main className="w-full m-x-auto items-center pb-8 flex flex-col h-full max-w-[1400px]">
-          <Providers>
-            <>
-              <Header />
-              {children}
-            </>
-          </Providers>
-        </main>
+      <body className="min-h-dvh h-full items-center flex flex-col bg-background text-text w-screen">
+        <Providers>
+          <Header />
+          <main className="w-full m-x-auto items-center flex flex-col pb-8 h-full min-h-[calc(100dvh-var(--header-height)-var(--page-padding-bottom))] max-w-[1400px]">
+            {children}
+          </main>
+        </Providers>
       </body>
     </html>
   );

@@ -10,7 +10,7 @@ export default async function Home() {
   const posts = await getBlogEntries(isEnabled);
 
   return (
-    <div className="w-full pt-10 relative @container min-h-screen max-w-content-max-width px-page-padding-x grid items-center gap-8">
+    <div className="relative @container page">
       <div className="grid grid-cols-5 gap-6">
         <Card
           size="large"

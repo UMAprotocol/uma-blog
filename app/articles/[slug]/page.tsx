@@ -46,7 +46,7 @@ export default async function BlogPage({ params: { slug } }: Props) {
           Exit draft Mode
         </Link>
       )}
-      <div className="w-full pt-10 relative @container min-h-screen max-w-content-max-width px-page-padding-x grid items-center gap-8">
+      <div className=" @container page">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>

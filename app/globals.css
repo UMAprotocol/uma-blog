@@ -5,6 +5,9 @@
 @layer base {
   :root {
     --page-padding-x: 12px;
+    --header-height: 96px;
+    --page-padding-bottom: 32px;
+
     --content-max-width: 1000px;
 
     --background-primary: 0 0% 100%;
@@ -68,5 +71,9 @@
 @layer components {
   .card {
     @apply border border-background-card shadow-sm rounded-xl bg-background-card backdrop-blur-xl;
+  }
+
+  .page {
+    @apply pt-10 grid items-center gap-8 relative w-full max-w-content-max-width px-page-padding-x  min-h-[calc(100dvh-var(--header-height)-var(--page-padding-bottom))];
   }
 }
