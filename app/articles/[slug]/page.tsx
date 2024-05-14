@@ -16,6 +16,7 @@ import { PublishDate } from "@/components/PublishDate";
 import { ReadingTime } from "@/components/ReadingTime";
 import { Badge } from "@/components/ui/badge";
 import { Divider } from "@/components/Divider";
+import { ButtonScrollTo } from "@/components/ButtonScrollTo";
 
 export async function generateStaticParams() {
   const posts = await getAllBlogSlugs(false);
@@ -87,6 +88,7 @@ export default async function BlogPage({ params: { slug } }: Props) {
             {renderDocumentText(post.fields.content)}
           </article>
         </div>
+        <ButtonScrollTo yPosition={0}>back to top</ButtonScrollTo>
       </div>
     </>
   );

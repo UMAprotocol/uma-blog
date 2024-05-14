@@ -1,10 +1,15 @@
-import { BLOCKS, MARKS, Document } from "@contentful/rich-text-types";
+import { BLOCKS, MARKS, Document, INLINES } from "@contentful/rich-text-types";
 import {
   RenderMark,
   RenderNode,
   documentToReactComponents,
 } from "@contentful/rich-text-react-renderer";
 import { ContentfulImage } from "../ContentfulImage/ContentfulImage";
+import { Paragraph } from "./Paragraph";
+import { Divider } from "../Divider";
+import { ExternalHrefType, Link } from "../Link";
+import { isContentfulAsset } from "@/types/utils";
+import { UmaBlogImageAsset } from "@/lib/contentful";
 
 // Map text-format types to custom components
 
@@ -18,10 +23,13 @@ const markRenderers: RenderMark = {
 };
 
 const nodeRenderers: RenderNode = {
-  [BLOCKS.DOCUMENT]: (_, children) => children,
-  [BLOCKS.PARAGRAPH]: (_, children) => (
-    <p className="text-text/75 text-lg tracking-wider font-light">{children}</p>
+  [INLINES.HYPERLINK]: (node, children) => (
+    <Link href={node.data.uri as ExternalHrefType} type="external">
+      {children}
+    </Link>
   ),
+  [BLOCKS.DOCUMENT]: (_, children) => children,
+  [BLOCKS.PARAGRAPH]: (_, children) => <Paragraph>{children}</Paragraph>,
   [BLOCKS.HEADING_1]: (_, children) => (
     <h1 className="text-4xl text-text">{children}</h1>
   ),
@@ -50,7 +58,7 @@ const nodeRenderers: RenderNode = {
   ),
   [BLOCKS.LIST_ITEM]: (_, children) => <li>{children}</li>,
   [BLOCKS.QUOTE]: (_, children) => <blockquote>{children}</blockquote>,
-  [BLOCKS.HR]: () => <hr />,
+  [BLOCKS.HR]: () => <Divider />,
   [BLOCKS.TABLE]: (_, children) => (
     <table>
       <tbody>{children}</tbody>
@@ -60,7 +68,32 @@ const nodeRenderers: RenderNode = {
   [BLOCKS.TABLE_HEADER_CELL]: (_, children) => <th>{children}</th>,
   [BLOCKS.TABLE_CELL]: (_, children) => <td>{children}</td>,
   [BLOCKS.EMBEDDED_ASSET]: (node) => {
-    return <ContentfulImage className="max-w-[400px]" {...node.data.target} />;
+    const data = node.data.target as UmaBlogImageAsset;
+    if (isContentfulAsset(data)) {
+      const { file, description, title } = data.fields;
+      const mimeGroup = file.contentType.split("/")[0]; // image / video etc
+
+      switch (mimeGroup) {
+        case "image":
+          return (
+            <ContentfulImage
+              showDescription
+              className="w-full rounded-xl"
+              {...data}
+            />
+          );
+        // TODO: test this, make custom component if necessary
+        case "video":
+          return (
+            <video title={title} aria-description={description} src={file.url}>
+              {description}
+            </video>
+          );
+        // TODO: add other asset types, handle them
+        default:
+          return <p>unknown file type</p>;
+      }
+    }
   },
 
   //   [INLINES.ASSET_HYPERLINK]: (node) =>

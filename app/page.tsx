@@ -3,6 +3,7 @@ import { draftMode } from "next/headers";
 import { Card } from "@/components/Card";
 import { Divider } from "@/components/Divider";
 import { Subscribe } from "./Subscribe";
+import { ButtonScrollTo } from "@/components/ButtonScrollTo";
 
 export default async function Home() {
   const { isEnabled } = draftMode();
@@ -35,6 +36,7 @@ export default async function Home() {
           />
         ))}
       </div>
+      <ButtonScrollTo yPosition={0}>back to top</ButtonScrollTo>
     </div>
   );
 }

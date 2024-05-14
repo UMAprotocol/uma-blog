@@ -2,6 +2,8 @@ import NextLink, { LinkProps } from "next/link";
 import { Icon } from "./Icon";
 import { cn } from "@/lib/utils";
 
+export type ExternalHrefType = `http${string}`;
+
 type CommonProps = {
   children: React.ReactNode;
   className?: string;
@@ -10,7 +12,7 @@ type CommonProps = {
 type ExternalLinkProps = CommonProps &
   React.ComponentPropsWithoutRef<"a"> & {
     type: "external";
-    href: `http${string}`;
+    href: ExternalHrefType;
   };
 
 type InternalLinkProps = CommonProps &

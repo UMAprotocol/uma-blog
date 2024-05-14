@@ -29,7 +29,6 @@ export function ContentfulImageWrapped({
       />
     );
   }
-
   return (
     <div className={cn("relative aspect-[3/2] overflow-hidden", className)}>
       <ContentfulImage
