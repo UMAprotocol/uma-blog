@@ -125,5 +125,11 @@
         d="M85.228 13.386 26.73 48.246a4.432 4.432 0 0 0-2.163 3.808v36.041"
       />
     </symbol>
+    <symbol id="hamburger" fill="none" viewBox="0 0 12 16">
+      <path
+        fill="currentColor"
+        d="M0 2.75h12v1.5H0zM0 7.25h12v1.5H0zM0 11.75h12v1.5H0z"
+      />
+    </symbol>
   </defs>
 </svg>

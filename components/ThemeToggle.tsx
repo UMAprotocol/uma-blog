@@ -7,18 +7,22 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
 import { Icon } from "@/components/Icon";
 
-export function ThemeToggle() {
-  const { setTheme } = useTheme();
+type Props = {
+  className?: string;
+};
+
+export function ThemeToggle({ className }: Props) {
+  const { setTheme, theme } = useTheme();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" size="icon" className={className}>
           <Icon
             name="sun"
             className="h-[1.2rem] text-text w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
@@ -31,27 +35,30 @@ export function ThemeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem
-          onClick={() => {
+        <DropdownMenuCheckboxItem
+          checked={theme === "light"}
+          onCheckedChange={() => {
             setTheme("light");
           }}
         >
           Light
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => {
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          checked={theme === "dark"}
+          onCheckedChange={() => {
             setTheme("dark");
           }}
         >
           Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => {
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          checked={theme === "system"}
+          onCheckedChange={() => {
             setTheme("system");
           }}
         >
           System
-        </DropdownMenuItem>
+        </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

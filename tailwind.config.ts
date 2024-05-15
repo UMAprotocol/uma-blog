@@ -21,10 +21,11 @@ const config = {
     extend: {
       spacing: {
         "page-padding-x": "var(--page-padding-x)",
+        "page-padding-x-lg": "var(--page-padding-x-lg)",
         "content-max-width": "var(--content-max-width)",
       },
       colors: {
-        border: "hsl(var(--border) / <alpha-value>)",
+        border: "hsl(var(--text-primary) / 0.03)",
         input: "hsl(var(--input) / <alpha-value>)",
         ring: "hsl(var(--ring) / <alpha-value>)",
         "line-pattern": {

@@ -4,7 +4,8 @@
 
 @layer base {
   :root {
-    --page-padding-x: 12px;
+    --page-padding-x: 16px;
+    --page-padding-x-lg: 20px;
     --header-height: 96px;
     --page-padding-bottom: 32px;
 
@@ -74,6 +75,10 @@
   }
 
   .page {
-    @apply pt-10 grid items-center gap-8 relative w-full max-w-content-max-width px-page-padding-x  min-h-[calc(100dvh-var(--header-height)-var(--page-padding-bottom))];
+    @apply pt-10 grid items-center gap-8 relative w-full max-w-content-max-width page-padding-x  min-h-[calc(100dvh-var(--header-height)-var(--page-padding-bottom))];
+  }
+
+  .page-padding-x {
+    @apply px-page-padding-x lg:px-page-padding-x-lg;
   }
 }
