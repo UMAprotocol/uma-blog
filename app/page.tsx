@@ -39,7 +39,9 @@ export default function Home({ searchParams }: PageProps) {
       >
         <Posts draftModeEnabled={isEnabled} searchParams={searchParams} />
       </Suspense>
-      <ButtonScrollTo yPosition={0}>back to top</ButtonScrollTo>
+      <ButtonScrollTo className="mx-auto" yPosition={0}>
+        back to top
+      </ButtonScrollTo>
     </div>
   );
 }

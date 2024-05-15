@@ -88,7 +88,9 @@ export default async function BlogPage({ params: { slug } }: Props) {
             {renderDocumentText(post.fields.content)}
           </article>
         </div>
-        <ButtonScrollTo yPosition={0}>back to top</ButtonScrollTo>
+        <ButtonScrollTo className="mx-auto" yPosition={0}>
+          back to top
+        </ButtonScrollTo>
       </div>
     </>
   );
