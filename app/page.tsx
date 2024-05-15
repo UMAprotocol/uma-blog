@@ -4,13 +4,21 @@ import { Card } from "@/components/Card";
 import { Divider } from "@/components/Divider";
 import { Subscribe } from "./Subscribe";
 import { ButtonScrollTo } from "@/components/ButtonScrollTo";
+import { Filter } from "@/components/Filter";
 
-export default async function Home() {
+export type SearchParams = Record<string, string | string[] | undefined>;
+
+type PageProps = {
+  searchParams: SearchParams;
+};
+
+export default async function Home({ searchParams }: PageProps) {
   const { isEnabled } = draftMode();
-  const posts = await getBlogEntries(isEnabled);
+  const posts = await getBlogEntries(isEnabled, searchParams);
 
   return (
     <div className="relative @container page">
+      <Filter />
       <div className="grid grid-cols-5 gap-6">
         <Card
           size="large"

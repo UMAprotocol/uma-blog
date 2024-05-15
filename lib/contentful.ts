@@ -1,4 +1,5 @@
 import { env } from "@/app/env";
+import { SearchParams } from "@/app/page";
 import { TypeBlogPostSkeleton } from "@/types/contentful";
 import { HasFields } from "@/types/utils";
 import { documentToPlainTextString } from "@contentful/rich-text-plain-text-renderer";
@@ -19,12 +20,24 @@ export const previewClient = createClient({
   host: "preview.contentful.com",
 });
 
-export async function getBlogEntries(isDraft: boolean) {
+function addProductFilter(searchParams: SearchParams) {
+  const product = searchParams.product;
+  if (product && typeof product === "string") {
+    return { "fields.product[match]": decodeURIComponent(product) };
+  }
+  return {};
+}
+
+export async function getBlogEntries(
+  isDraft: boolean,
+  searchParams: SearchParams,
+) {
   const client = isDraft ? previewClient : productionClient;
   const options = {
     content_type: contentType,
     "fields.content[exists]": true,
     order: "-fields.publishDate", // sorted latest first
+    ...addProductFilter(searchParams),
   } as const;
   const entries =
     await client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
@@ -71,6 +84,7 @@ export type UmaBlogEntries = Awaited<ReturnType<typeof getBlogEntries>>;
 export type UmaBlogEntry = UmaBlogEntries["items"][number];
 
 export type UmaBlogImageAsset = UmaBlogEntry["fields"]["heroImage"];
+export type UmaProducts = UmaBlogEntry["fields"]["product"];
 
 export type ImageWithFields = HasFields<UmaBlogImageAsset>;
 

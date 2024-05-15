@@ -12,9 +12,10 @@ export function Divider({
   return (
     <div
       className={cn(
-        "w-full h-[1px] bg-border rounded-full",
+        "bg-border rounded-full",
         {
-          "rotate-90": orientation === "vertical",
+          "w-auto h-[1px]": orientation === "horizontal",
+          "h-auto w-[1px]": orientation === "vertical",
         },
         className,
       )}
