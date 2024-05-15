@@ -54,7 +54,7 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
 
   return (
     <>
-      <div className="grid grid-cols-5 gap-6">
+      <div className="grid grid-cols-5 gap-6 w-full">
         <Card
           size="large"
           className="col-span-5 @3xl:col-span-4"
