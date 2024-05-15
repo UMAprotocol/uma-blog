@@ -19,11 +19,16 @@ import { UmaProducts } from "@/lib/contentful";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
 import { Icon } from "./Icon";
+import { cn } from "@/lib/utils";
 
 //  can not pull this from CMS for some reason 🤔
 const products = ["optimistic oracle", "osnap", "oval"] as const;
 
-export function Filter() {
+type FilterProps = {
+  className?: string;
+};
+
+export function Filter({ className }: FilterProps) {
   const [productFilter, setProductFilter] = useState<UmaProducts>();
   const router = useRouter();
   const pathname = usePathname();
@@ -59,7 +64,9 @@ export function Filter() {
   }, [productFilter]);
 
   return (
-    <div className="relative flex flex-col md:flex-row gap-2 py-4">
+    <div
+      className={cn("relative flex flex-col md:flex-row gap-2 py-4", className)}
+    >
       <Input className="md:max-w-[320px]" type="text" placeholder="Search" />
       <Divider orientation="vertical" />
       <Select

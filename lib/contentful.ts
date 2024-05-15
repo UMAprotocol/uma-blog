@@ -6,6 +6,7 @@ import { documentToPlainTextString } from "@contentful/rich-text-plain-text-rend
 import { Document } from "@contentful/rich-text-types";
 import { createClient } from "contentful";
 import words from "lodash.words";
+import { cache } from "react";
 
 const contentType = "blogPost";
 
@@ -28,23 +29,22 @@ function addProductFilter(searchParams: SearchParams) {
   return {};
 }
 
-export async function getBlogEntries(
-  isDraft: boolean,
-  searchParams: SearchParams,
-) {
-  const client = isDraft ? previewClient : productionClient;
-  const options = {
-    content_type: contentType,
-    "fields.content[exists]": true,
-    order: "-fields.publishDate", // sorted latest first
-    ...addProductFilter(searchParams),
-  } as const;
-  const entries =
-    await client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
-      options,
-    );
-  return entries;
-}
+export const getBlogEntries = cache(
+  async (isDraft: boolean, searchParams: SearchParams) => {
+    const client = isDraft ? previewClient : productionClient;
+    const options = {
+      content_type: contentType,
+      "fields.content[exists]": true,
+      order: "-fields.publishDate", // sorted latest first
+      ...addProductFilter(searchParams),
+    } as const;
+    const entries =
+      await client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
+        options,
+      );
+    return entries;
+  },
+);
 
 export async function getBlogPostBySlug(
   slug: UmaBlogEntry["fields"]["slug"],
