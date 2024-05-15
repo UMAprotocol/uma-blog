@@ -60,7 +60,7 @@ export function Filter() {
 
   return (
     <div className="relative flex flex-col md:flex-row gap-2 py-4">
-      <Input className="max-w-[320px]" type="text" placeholder="Search" />
+      <Input className="md:max-w-[320px]" type="text" placeholder="Search" />
       <Divider orientation="vertical" />
       <Select
         value={productFilter}
@@ -69,7 +69,7 @@ export function Filter() {
           setProductFilter(prod as UmaProducts);
         }}
       >
-        <SelectTrigger className="w-[180px] capitalize placeholder:font-light placeholder:text-text-secondary">
+        <SelectTrigger className="w-full md:w-[180px] capitalize placeholder:font-light placeholder:text-text-secondary">
           <SelectValue placeholder="Product" />
         </SelectTrigger>
         <SelectContent>
