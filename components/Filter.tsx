@@ -34,16 +34,13 @@ export function Filter({ className }: FilterProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  function clear() {
-    setProductFilter(undefined);
-  }
-
   function setParam(key: string, value: string) {
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.set(key, encodeURIComponent(value));
     router.push(`${pathname}/?${newSearchParams.toString()}`, {
       scroll: false,
     });
+    setProductFilter(value as UmaProducts);
   }
 
   function removeParam(key: string) {
@@ -52,16 +49,16 @@ export function Filter({ className }: FilterProps) {
     router.push(`${pathname}/?${newSearchParams.toString()}`, {
       scroll: false,
     });
+    setProductFilter(undefined);
   }
 
   useEffect(() => {
-    if (productFilter) {
-      setParam("product", productFilter);
-    } else {
-      removeParam("product");
+    const productParam = searchParams.get("product");
+    if (productParam && !productFilter) {
+      setParam("product", decodeURIComponent(productParam));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productFilter]);
+  }, []);
 
   return (
     <div
@@ -73,7 +70,7 @@ export function Filter({ className }: FilterProps) {
         value={productFilter}
         key={productFilter}
         onValueChange={(prod) => {
-          setProductFilter(prod as UmaProducts);
+          setParam("product", prod);
         }}
       >
         <SelectTrigger className="w-full md:w-[180px] capitalize placeholder:font-light placeholder:text-text-secondary">
@@ -91,7 +88,9 @@ export function Filter({ className }: FilterProps) {
         </SelectContent>
       </Select>
       <Button
-        onClick={clear}
+        onClick={() => {
+          removeParam("product");
+        }}
         className="flex uppercase text-text-secondary hover:text-text font-light items-center gap-4"
         variant="outline"
       >
