@@ -63,6 +63,7 @@ export function Filter() {
       <Input className="max-w-[320px]" type="text" placeholder="Search" />
       <Divider orientation="vertical" />
       <Select
+        key={productFilter}
         onValueChange={(prod) => {
           setProductFilter(prod as UmaProducts);
         }}
