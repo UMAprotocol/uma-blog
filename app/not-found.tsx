@@ -2,8 +2,8 @@ import { Link } from "@/components/Link";
 
 export default function NotFound() {
   return (
-    <div className="w-screen page grid place-items-center gap-4">
-      <div className="flex flex-col gap-4 items-center">
+    <div className="w-full page gap-4">
+      <div className="flex-1 flex w-full justify-center flex-col gap-4 items-center">
         <h2 className="text-[120px] leading-[1em] xl:text-[200px] font-light">
           404
         </h2>
