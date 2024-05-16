@@ -29,14 +29,23 @@ function addProductFilter(searchParams: SearchParams) {
   return {};
 }
 
+function addTextSearchFilter(searchParams: SearchParams) {
+  const searchText = searchParams.search;
+  if (searchText && typeof searchText === "string") {
+    return { query: decodeURIComponent(searchText) };
+  }
+  return {};
+}
+
 export const getBlogEntries = cache(
   async (isDraft: boolean, searchParams: SearchParams) => {
     const client = isDraft ? previewClient : productionClient;
     const options = {
       content_type: contentType,
-      "fields.content[exists]": true,
+      "fields.content[exists]": true, // no empty posts
       order: "-fields.publishDate", // sorted latest first
       ...addProductFilter(searchParams),
+      ...addTextSearchFilter(searchParams),
     } as const;
     const entries =
       await client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
