@@ -1,9 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-// full text search
-// filter by product
-// filter by tag
 import { Divider } from "./Divider";
 import { Input } from "./ui/input";
 import {
@@ -16,50 +12,34 @@ import {
   SelectValue,
 } from "./ui/select";
 import { UmaProducts } from "@/lib/contentful";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
 import { Icon } from "./Icon";
 import { cn } from "@/lib/utils";
+import { useSetQueryParam } from "@/hooks/useSetQueryParam";
 
-//  can not pull this from CMS for some reason 🤔
 const products = ["optimistic oracle", "osnap", "oval"] as const;
 
 type FilterProps = {
   className?: string;
 };
 
+function useProductParam() {
+  const {
+    param: productFilter,
+    setParam: setProduct,
+    removeParam: removeProduct,
+  } = useSetQueryParam<UmaProducts>({
+    key: "product",
+  });
+  return {
+    productFilter,
+    setProduct,
+    removeProduct,
+  };
+}
+
 export function Filter({ className }: FilterProps) {
-  const [productFilter, setProductFilter] = useState<UmaProducts>();
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  function setParam(key: string, value: string) {
-    const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.set(key, encodeURIComponent(value));
-    router.push(`${pathname}/?${newSearchParams.toString()}`, {
-      scroll: false,
-    });
-    setProductFilter(value as UmaProducts);
-  }
-
-  function removeParam(key: string) {
-    const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.delete(key);
-    router.push(`${pathname}/?${newSearchParams.toString()}`, {
-      scroll: false,
-    });
-    setProductFilter(undefined);
-  }
-
-  useEffect(() => {
-    const productParam = searchParams.get("product");
-    if (productParam && !productFilter) {
-      setParam("product", decodeURIComponent(productParam));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  const { productFilter, setProduct, removeProduct } = useProductParam();
   return (
     <div
       className={cn("relative flex flex-col md:flex-row gap-2 py-4", className)}
@@ -70,7 +50,7 @@ export function Filter({ className }: FilterProps) {
         value={productFilter}
         key={productFilter}
         onValueChange={(prod) => {
-          setParam("product", prod);
+          setProduct(prod);
         }}
       >
         <SelectTrigger className="w-full md:w-[180px] capitalize placeholder:font-light placeholder:text-text-secondary">
@@ -89,7 +69,7 @@ export function Filter({ className }: FilterProps) {
       </Select>
       <Button
         onClick={() => {
-          removeParam("product");
+          removeProduct();
         }}
         className="flex uppercase text-text-secondary hover:text-text font-light items-center gap-4"
         variant="outline"

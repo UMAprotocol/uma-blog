@@ -30,14 +30,17 @@ export default function Home({ searchParams }: PageProps) {
     <div className="relative @container page">
       <Filter className="w-full" />
       <Suspense
-        key={key}
         fallback={
           <h2 className="my-auto flex-1 text-text-secondary text-2xl">
             Searching...
           </h2>
         }
       >
-        <Posts draftModeEnabled={isEnabled} searchParams={searchParams} />
+        <Posts
+          key={key}
+          draftModeEnabled={isEnabled}
+          searchParams={searchParams}
+        />
       </Suspense>
       <ButtonScrollTo className="mx-auto" yPosition={0}>
         back to top
