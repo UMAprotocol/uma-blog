@@ -23,6 +23,7 @@ const config = {
         "page-padding-x": "var(--page-padding-x)",
         "page-padding-x-lg": "var(--page-padding-x-lg)",
         "content-max-width": "var(--content-max-width)",
+        "outer-max-width": "var(--outer-content-max-width)",
       },
       colors: {
         border: "hsl(var(--text-primary) / 0.03)",

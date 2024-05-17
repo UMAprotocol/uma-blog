@@ -57,6 +57,14 @@ type PostsProps = {
 async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
   const posts = await getBlogEntries(draftModeEnabled, searchParams);
 
+  if (!posts.total) {
+    return (
+      <h2 className="my-auto flex-1 text-text-secondary text-2xl">
+        Couldn&apos;t find anything...
+      </h2>
+    );
+  }
+
   return (
     <>
       <div className="grid grid-cols-5 gap-6 w-full">
@@ -69,22 +77,25 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
         />
         <Subscribe className="col-span-5 @3xl:aspect-square self-auto @3xl:col-span-1" />
       </div>
+      {posts.total > 1 ? (
+        <>
+          <Divider />
+          <div className="uppercase text-text-secondary font-light tracking-wider text-md">
+            most recent articles
+          </div>
 
-      <Divider />
-      <div className="uppercase text-text-secondary font-light tracking-wider text-md">
-        most recent articles
-      </div>
-
-      <div className="w-full grid grid-cols-5 gap-6">
-        {posts.items.slice(1).map((post) => (
-          <Card
-            className="col-span-5 @3xl:col-span-4"
-            href={`/articles/${post.fields.slug}`}
-            key={post.sys.id}
-            post={post}
-          />
-        ))}
-      </div>
+          <div className="w-full grid grid-cols-5 gap-6">
+            {posts.items.slice(1).map((post) => (
+              <Card
+                className="col-span-5 @3xl:col-span-4"
+                href={`/articles/${post.fields.slug}`}
+                key={post.sys.id}
+                post={post}
+              />
+            ))}
+          </div>
+        </>
+      ) : null}
     </>
   );
 }

@@ -9,7 +9,8 @@
     --header-height: 96px;
     --page-padding-bottom: 32px;
 
-    --content-max-width: 1000px;
+    --content-max-width: 1000px; /* for page content */
+    --outer-content-max-width: 1200px; /* for footer and header */
 
     --background-primary: 0 0% 100%;
     --background-secondary: 0 0% 95%;
@@ -75,7 +76,7 @@
   }
 
   .page {
-    @apply pt-10 flex flex-col items-start justify-start gap-8 relative w-full max-w-content-max-width page-padding-x  min-h-[calc(100dvh-var(--header-height)-var(--page-padding-bottom))];
+    @apply pt-10 flex flex-col items-start justify-start gap-8 relative w-full max-w-outer-max-width page-padding-x  min-h-[calc(100dvh-var(--header-height)-var(--page-padding-bottom))];
   }
 
   .page-padding-x {
