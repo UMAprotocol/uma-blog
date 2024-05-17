@@ -7,9 +7,10 @@ import {
 import { ContentfulImage } from "../ContentfulImage/ContentfulImage";
 import { Paragraph } from "./Paragraph";
 import { Divider } from "../Divider";
-import { ExternalHrefType, Link } from "../Link";
 import { isContentfulAsset } from "@/types/utils";
 import { UmaBlogImageAsset } from "@/lib/contentful";
+import Link from "next/link";
+import { isExternal } from "../Link";
 
 // Map text-format types to custom components
 
@@ -23,11 +24,19 @@ const markRenderers: RenderMark = {
 };
 
 const nodeRenderers: RenderNode = {
-  [INLINES.HYPERLINK]: (node, children) => (
-    <Link href={node.data.uri as ExternalHrefType} type="external">
-      {children}
-    </Link>
-  ),
+  [INLINES.HYPERLINK]: (node, children) => {
+    const href = node.data.uri as string;
+    return (
+      <Link
+        target={isExternal(href) ? "_blank" : undefined}
+        className="underline hover:text-text"
+        href={href}
+        type="external"
+      >
+        {children}
+      </Link>
+    );
+  },
   [BLOCKS.DOCUMENT]: (_, children) => children,
   [BLOCKS.PARAGRAPH]: (_, children) => <Paragraph>{children}</Paragraph>,
   [BLOCKS.HEADING_1]: (_, children) => (

@@ -52,3 +52,7 @@ export function Link(props: Props) {
     </a>
   );
 }
+
+export function isExternal(href: string) {
+  return href.startsWith("http");
+}
