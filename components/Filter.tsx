@@ -15,7 +15,7 @@ import { UmaProducts } from "@/lib/contentful";
 import { Button } from "./ui/button";
 import { Icon } from "./Icon";
 import { cn } from "@/lib/utils";
-import { useSetQueryParam } from "@/hooks/useSetQueryParam";
+import { useFilter } from "@/hooks/useFilter";
 
 const products = ["optimistic oracle", "osnap", "oval"] as const;
 
@@ -23,34 +23,33 @@ type FilterProps = {
   className?: string;
 };
 
-function useProductParam() {
-  const {
-    param: productFilter,
-    setParam: setProduct,
-    removeParam: removeProduct,
-  } = useSetQueryParam<UmaProducts>({
-    key: "product",
-  });
-  return {
-    productFilter,
-    setProduct,
-    removeProduct,
-  };
-}
-
 export function Filter({ className }: FilterProps) {
-  const { productFilter, setProduct, removeProduct } = useProductParam();
+  const {
+    text,
+    handleTextChange,
+    productParam,
+    handleProductChange,
+    clearAll,
+  } = useFilter();
   return (
     <div
       className={cn("relative flex flex-col md:flex-row gap-2 py-4", className)}
     >
-      <Input className="md:max-w-[320px]" type="text" placeholder="Search" />
+      <Input
+        value={text}
+        onChange={(e) => {
+          handleTextChange(e.target.value);
+        }}
+        className="md:max-w-[320px]"
+        type="text"
+        placeholder="Search"
+      />
       <Divider orientation="vertical" />
       <Select
-        value={productFilter}
-        key={productFilter}
+        value={productParam}
+        key={productParam}
         onValueChange={(prod) => {
-          setProduct(prod);
+          handleProductChange(prod as UmaProducts);
         }}
       >
         <SelectTrigger className="w-full md:w-[180px] capitalize placeholder:font-light placeholder:text-text-secondary">
@@ -69,7 +68,7 @@ export function Filter({ className }: FilterProps) {
       </Select>
       <Button
         onClick={() => {
-          removeProduct();
+          clearAll();
         }}
         className="flex uppercase text-text-secondary hover:text-text font-light items-center gap-4"
         variant="outline"
