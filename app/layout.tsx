@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { halyardDisplay } from "./fonts";
 import "./globals.css";
 import { Providers } from "../providers/Providers";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/Header";
+import { env } from "./env";
 
 export const metadata: Metadata = {
   title: "UMA Blog",
@@ -30,6 +32,7 @@ export default function RootLayout({
           </main>
         </Providers>
       </body>
+      <GoogleAnalytics gaId={env.GOOGLE_ANALYTICS_TAG} />
     </html>
   );
 }
