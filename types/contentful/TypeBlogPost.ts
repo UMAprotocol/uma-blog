@@ -14,6 +14,7 @@ export type TypeBlogPostFields = {
   content: EntryFieldTypes.RichText;
   slug: EntryFieldTypes.Symbol;
   tags: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
+  metaDescription: EntryFieldTypes.Symbol;
 };
 
 export type TypeBlogPostSkeleton = EntrySkeletonType<

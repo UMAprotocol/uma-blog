@@ -17,6 +17,8 @@ import { ReadingTime } from "@/components/ReadingTime";
 import { Badge } from "@/components/ui/badge";
 import { Divider } from "@/components/Divider";
 import { ButtonScrollTo } from "@/components/ButtonScrollTo";
+import { Metadata } from "next";
+import { isContentfulAsset } from "@/types/utils";
 
 export async function generateStaticParams() {
   const posts = await getAllBlogSlugs(false);
@@ -30,6 +32,45 @@ type Props = {
     slug: string;
   };
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = params;
+  const post = await getBlogPostBySlug(slug, false);
+
+  // get image
+  const imageUrl = (() => {
+    if (!isContentfulAsset(post.fields.heroImage)) {
+      // default to blog site's OG image'
+      return `/twitter-card.png`;
+    }
+    return `https:${post.fields.heroImage.fields.file.url}`;
+  })();
+
+  // get title
+  const title = post.fields.title;
+  // get description
+  const description = post.fields.metaDescription;
+
+  return {
+    title,
+    description,
+    icons: {
+      icon: ["/favicon-32x32.png", "/favicon-16x16.png"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "@UMAprotocol",
+      title,
+      images: [imageUrl],
+    },
+    openGraph: {
+      title,
+      description,
+      images: [imageUrl],
+      url: `https://blog.uma.xyz/articles/${slug}`,
+    },
+  };
+}
 
 export default async function BlogPage({ params: { slug } }: Props) {
   const { isEnabled } = draftMode();

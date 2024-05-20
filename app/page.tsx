@@ -7,6 +7,7 @@ import { ButtonScrollTo } from "@/components/ButtonScrollTo";
 import { Filter } from "@/components/Filter";
 import { Suspense } from "react";
 import { createCacheKey } from "@/lib/utils";
+import { Metadata } from "next";
 
 export type SearchParams = Record<string, string | string[] | undefined>;
 
@@ -14,11 +15,36 @@ type PageProps = {
   searchParams: SearchParams;
 };
 
+// TODO: get proper copy for this
+const title = "UMA Blog";
+const description =
+  "UMA's official blog. Get all our latest articles about the optimistic oracle and oSnap.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  icons: {
+    icon: ["/favicon-32x32.png", "/favicon-16x16.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@UMAprotocol",
+    title,
+    images: "/twitter-card.png",
+  },
+  openGraph: {
+    title,
+    description,
+    images: "/twitter-card.png",
+    url: "https://blog.uma.xyz",
+  },
+};
+
 export default function Home({ searchParams }: PageProps) {
   const { isEnabled } = draftMode();
 
-  // set a key for the async post component to purge data when URL changes.
-  // this way we can always show the loading state, when actually fetching data
+  // set a key for the async post component to reset state when URL changes.
+  // this way we can always show the loading state when fetching data
   const key = createCacheKey({
     draftModeEnabled: isEnabled,
     searchParams,
@@ -30,6 +56,7 @@ export default function Home({ searchParams }: PageProps) {
     <div className="relative @container page">
       <Filter className="w-full" />
       <Suspense
+        key={key}
         fallback={
           <h2 className="my-auto flex-1 text-text-secondary text-2xl">
             Searching...
