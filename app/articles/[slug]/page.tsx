@@ -52,6 +52,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = post.fields.metaDescription;
 
   return {
+    metadataBase: new URL("https://uma-blog-alpha.vercel.app"),
+    alternates: {
+      canonical: "/",
+      languages: {
+        "en-US": "/en-US",
+      },
+    },
     title,
     description,
     icons: {
@@ -67,7 +74,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       images: [imageUrl],
-      url: `https://blog.uma.xyz/articles/${slug}`,
+      url: `/articles/${slug}`,
     },
   };
 }

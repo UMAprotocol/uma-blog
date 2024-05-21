@@ -21,6 +21,13 @@ const description =
   "UMA's official blog. Get all our latest articles about the optimistic oracle and oSnap.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://uma-blog-alpha.vercel.app"),
+  alternates: {
+    canonical: "/",
+    languages: {
+      "en-US": "/en-US",
+    },
+  },
   title,
   description,
   icons: {
@@ -36,7 +43,7 @@ export const metadata: Metadata = {
     title,
     description,
     images: "/twitter-card.png",
-    url: "https://blog.uma.xyz",
+    url: "/",
   },
 };
 
@@ -102,7 +109,7 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
           key={posts.items[0].sys.id}
           post={posts.items[0]}
         />
-        <Subscribe className="col-span-5 @3xl:aspect-square self-auto @3xl:col-span-1" />
+        <Subscribe className="col-span-5 @3xl:aspect-[1.2/1] self-auto @3xl:col-span-1" />
       </div>
       {posts.total > 1 ? (
         <>

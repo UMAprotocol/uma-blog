@@ -31,7 +31,7 @@
 
   .dark {
     --background-primary: 280 4% 15%;
-    --background-secondary: 280 4% 25%;
+    --background-secondary: 280 4% 17%;
 
     --popover: 280 3% 19%;
     --popover-secondary: 280 3% 23%;
@@ -72,7 +72,7 @@
 
 @layer components {
   .card {
-    @apply border border-background-card shadow-sm rounded-xl bg-background-card backdrop-blur-xl;
+    @apply border border-background-card shadow-sm rounded-xl bg-background-secondary backdrop-blur-xl;
   }
 
   .page {
