@@ -23,7 +23,12 @@ export function Header() {
     <>
       {/* DESKTOP */}
       <div className="w-full max-w-[--outer-content-max-width] hidden sm:flex page-padding-x h-[96px] items-center py-4 justify-center">
-        <Link type="internal" className="w-[80px] h-full relative" href="/">
+        <Link
+          aria-label="Home"
+          type="internal"
+          className="w-[80px] h-full relative"
+          href="/"
+        >
           <Icon name="uma-logo" className="text-text w-full h-full" />
         </Link>
 

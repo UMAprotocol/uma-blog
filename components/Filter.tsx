@@ -36,6 +36,7 @@ export function Filter({ className }: FilterProps) {
       className={cn("relative flex flex-col md:flex-row gap-2 py-4", className)}
     >
       <Input
+        aria-label="Full text search input field"
         value={text}
         onChange={(e) => {
           handleTextChange(e.target.value);
@@ -52,7 +53,10 @@ export function Filter({ className }: FilterProps) {
           handleProductChange(prod as UmaProducts);
         }}
       >
-        <SelectTrigger className="w-full md:w-[180px] capitalize placeholder:font-light placeholder:text-text-secondary">
+        <SelectTrigger
+          aria-label="Choose an UMA product to filter by."
+          className="w-full md:w-[180px] capitalize placeholder:font-light placeholder:text-text-secondary"
+        >
           <SelectValue placeholder="Product" />
         </SelectTrigger>
         <SelectContent>

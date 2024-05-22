@@ -1,10 +1,13 @@
 import { UmaBlogImageAsset } from "@/lib/contentful";
 import { isContentfulAsset } from "@/types/utils";
-import { ContentfulImage } from "./ContentfulImage";
+import { ContentfulImage, ContentfulImageProps } from "./ContentfulImage";
 import { cn } from "@/lib/utils";
 import { PlaceholderBlogImage } from "../PlaceholderBlogImage";
 
-export type ContentfulImageWrappedProps = {
+export type ContentfulImageWrappedProps = Pick<
+  ContentfulImageProps,
+  "priority"
+> & {
   image: UmaBlogImageAsset;
   className?: string;
   zoomOnHover?: boolean;
@@ -13,6 +16,7 @@ export type ContentfulImageWrappedProps = {
 export function ContentfulImageWrapped({
   image,
   className,
+  priority = false,
   zoomOnHover = false,
 }: ContentfulImageWrappedProps) {
   if (!isContentfulAsset(image)) {
@@ -37,6 +41,7 @@ export function ContentfulImageWrapped({
     >
       <ContentfulImage
         fill
+        priority={priority}
         className={cn({
           "transition-transform object-cover group-hover:scale-110":
             zoomOnHover,

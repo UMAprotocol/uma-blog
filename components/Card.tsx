@@ -64,6 +64,7 @@ export function Card({ post, size, className, ...props }: CardProps) {
     <Link className={cn(rootVariants({ size, className }))} {...props}>
       <div className="gap-6 grid grid-cols-9">
         <ContentfulImageWrapped
+          priority={size === "large"}
           zoomOnHover
           className={cn(imageVariants({ size }))}
           image={post.fields.heroImage}

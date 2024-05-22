@@ -6,7 +6,7 @@ import { useState } from "react";
 import { PlaceholderBlogImage } from "../PlaceholderBlogImage";
 
 export type ContentfulImageProps = ImageWithFields &
-  Pick<ImageProps, "fill"> & {
+  Pick<ImageProps, "fill" | "priority"> & {
     className?: string;
     showDescription?: boolean;
   };
@@ -14,6 +14,7 @@ export type ContentfulImageProps = ImageWithFields &
 export function ContentfulImage({
   className,
   fill,
+  priority,
   showDescription,
   ...props
 }: ContentfulImageProps) {
@@ -40,6 +41,7 @@ export function ContentfulImage({
           { "object-cover w-full h-full object-center": fill },
           className,
         )}
+        priority={priority}
         alt={description}
         src={`https:${file.url}`}
         height={!fill ? file.details.image?.height : undefined}
