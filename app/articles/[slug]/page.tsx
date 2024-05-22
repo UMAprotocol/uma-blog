@@ -108,6 +108,7 @@ export default async function BlogPage({ params: { slug } }: Props) {
         </Breadcrumb>
         <div className="grid grid-cols-5 gap-6">
           <ContentfulImageWrapped
+            priority
             className="col-span-5 @3xl:col-span-4 aspect-[1.8/1] rounded-xl"
             image={post.fields.heroImage}
           />
