@@ -1,5 +1,9 @@
 import { ContentfulImageWrapped } from "@/components/ContentfulImage/ContentfulImageWrapped";
-import { getAllBlogSlugs, getBlogPostBySlug } from "@/lib/contentful";
+import {
+  getAllBlogSlugs,
+  getBlogPostBySlug,
+  getRelatedPosts,
+} from "@/lib/contentful";
 import { draftMode } from "next/headers";
 import Link from "next/link";
 import { renderDocumentText } from "@/components/RichText/RenderDocumentText";
@@ -19,6 +23,7 @@ import { Divider } from "@/components/Divider";
 import { ButtonScrollTo } from "@/components/ButtonScrollTo";
 import { Metadata } from "next";
 import { isContentfulAsset } from "@/types/utils";
+import { CardCarousel } from "@/components/CardCarousel";
 
 export async function generateStaticParams() {
   const posts = await getAllBlogSlugs(false);
@@ -82,6 +87,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BlogPage({ params: { slug } }: Props) {
   const { isEnabled } = draftMode();
   const post = await getBlogPostBySlug(slug, isEnabled);
+  // get 3 more posts of the same product
+  const morePosts = await getRelatedPosts(slug, post.fields.product, isEnabled);
 
   return (
     <>
@@ -94,7 +101,7 @@ export default async function BlogPage({ params: { slug } }: Props) {
           Exit draft Mode
         </Link>
       )}
-      <div className=" @container page">
+      <div className="@container page">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -137,6 +144,15 @@ export default async function BlogPage({ params: { slug } }: Props) {
             {renderDocumentText(post.fields.content)}
           </article>
         </div>
+        <Divider />
+        <h3 className="text-xl font-light mr-auto text-text/75">
+          Related Articles
+        </h3>
+        <CardCarousel
+          className="col-span-5 @3xl:col-span-4"
+          posts={morePosts}
+        />
+
         <ButtonScrollTo className="mx-auto" yPosition={0}>
           back to top
         </ButtonScrollTo>

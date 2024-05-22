@@ -47,11 +47,9 @@ export const getBlogEntries = cache(
       ...addProductFilter(searchParams),
       ...addTextSearchFilter(searchParams),
     } as const;
-    const entries =
-      await client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
-        options,
-      );
-    return entries;
+    return client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
+      options,
+    );
   },
 );
 
@@ -70,6 +68,26 @@ export async function getBlogPostBySlug(
       options,
     );
   return entries.items[0];
+}
+
+// gets 3 most related articles based on topic tags
+export async function getRelatedPosts(
+  slugToIgnore: UmaBlogEntry["fields"]["slug"],
+  product: UmaBlogEntry["fields"]["product"],
+  isDraftMode: boolean,
+) {
+  const client = isDraftMode ? previewClient : productionClient;
+  const options = {
+    content_type: contentType,
+    limit: 3,
+    "fields.content[exists]": true, // no empty posts
+    "fields.product[match]": product, // get posts with same product
+    "fields.slug[nin]": slugToIgnore, // don't include current post
+    order: "-fields.publishDate", // sorted latest first
+  } as const;
+  return client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
+    options,
+  );
 }
 
 export async function getAllBlogSlugs(isDraft: boolean) {

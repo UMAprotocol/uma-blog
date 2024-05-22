@@ -39,7 +39,7 @@ const textBoxVariants = cva(
 );
 
 const rootVariants = cva(
-  "group card shadow-md hover:border-text transition-colors gap-6 p-4 @2xl:p-5 ",
+  "group card shadow-md hover:border-text transition-colors gap-6 p-4 @2xl:p-5",
   {
     variants: {
       size: {
@@ -62,7 +62,7 @@ type CardProps = {
 export function Card({ post, size, className, ...props }: CardProps) {
   return (
     <Link className={cn(rootVariants({ size, className }))} {...props}>
-      <div className="gap-6 grid grid-cols-9">
+      <div className="gap-6 grid grid-cols-9 w-full">
         <ContentfulImageWrapped
           priority={size === "large"}
           zoomOnHover

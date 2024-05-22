@@ -72,7 +72,7 @@
 
 @layer components {
   .card {
-    @apply border border-background-card shadow-sm rounded-xl bg-background-secondary backdrop-blur-xl;
+    @apply border block border-background-card shadow-sm rounded-xl bg-background-secondary backdrop-blur-xl;
   }
 
   .page {
