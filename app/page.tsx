@@ -6,10 +6,27 @@ import { Subscribe } from "./Subscribe";
 import { ButtonScrollTo } from "@/components/ButtonScrollTo";
 import { Filter } from "@/components/Filter";
 import { Suspense } from "react";
-import { createCacheKey } from "@/lib/utils";
-import { Metadata } from "next";
+import {
+  canPaginatePrevious,
+  getPaginationControlLink,
+  getPreviousPaginationLink,
+  getPaginationPages,
+  getNextPaginationLink,
+  canPaginateNext,
+} from "@/lib/pagination";
 
-export type SearchParams = Record<string, string | string[] | undefined>;
+import { Metadata } from "next";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { createCacheKey, cn } from "@/lib/utils";
+
+export type SearchParams = Record<string, string | undefined>;
 
 type PageProps = {
   searchParams: SearchParams;
@@ -130,6 +147,60 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
           </div>
         </>
       ) : null}
+
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              className={cn({
+                "opacity-40": !canPaginatePrevious({
+                  searchParams,
+                }),
+              })}
+              href={getPreviousPaginationLink({
+                totalPosts: posts.total,
+                pathname: "/",
+                searchParams,
+              })}
+            />
+          </PaginationItem>
+          {Array.from({ length: getPaginationPages(posts.total) }).map(
+            (_, i) => (
+              <PaginationItem key={i}>
+                <PaginationLink
+                  isActive={parseInt(searchParams.skip ?? "0") === i}
+                  href={getPaginationControlLink({
+                    totalPosts: posts.total,
+                    pathname: "/",
+                    searchParams,
+                    paginationControl: {
+                      skip: i,
+                    },
+                  })}
+                >
+                  {i + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ),
+          )}
+
+          <PaginationItem>
+            <PaginationNext
+              className={cn({
+                "opacity-40": !canPaginateNext({
+                  totalPosts: posts.total,
+                  searchParams,
+                }),
+              })}
+              href={getNextPaginationLink({
+                totalPosts: posts.total,
+                pathname: "/",
+                searchParams,
+              })}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </>
   );
 }

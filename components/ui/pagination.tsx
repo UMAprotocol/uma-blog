@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { ButtonProps, buttonVariants } from "@/components/ui/button";
+import Link, { LinkProps } from "next/link";
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
@@ -36,16 +37,17 @@ PaginationItem.displayName = "PaginationItem";
 
 type PaginationLinkProps = {
   isActive?: boolean;
+  className?: string;
 } & Pick<ButtonProps, "size"> &
-  React.ComponentProps<"a">;
+  LinkProps;
 
 const PaginationLink = ({
   className,
   isActive,
   size = "icon",
   ...props
-}: PaginationLinkProps) => (
-  <a
+}: React.PropsWithChildren<PaginationLinkProps>) => (
+  <Link
     aria-current={isActive ? "page" : undefined}
     className={cn(
       buttonVariants({

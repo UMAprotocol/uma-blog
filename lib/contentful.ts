@@ -7,6 +7,7 @@ import { Document } from "@contentful/rich-text-types";
 import { createClient } from "contentful";
 import words from "lodash.words";
 import { cache } from "react";
+import { PAGINATION_LIMIT } from "./pagination";
 
 const contentType = "blogPost";
 
@@ -37,6 +38,19 @@ function addTextSearchFilter(searchParams: SearchParams) {
   return {};
 }
 
+function addPaginationControls(searchParams: SearchParams) {
+  const { skip } = searchParams;
+  if (typeof skip === "string") {
+    return {
+      limit: PAGINATION_LIMIT,
+      skip: parseInt(skip) * PAGINATION_LIMIT,
+    };
+  }
+  return {
+    limit: PAGINATION_LIMIT,
+  };
+}
+
 export const getBlogEntries = cache(
   async (isDraft: boolean, searchParams: SearchParams) => {
     const client = isDraft ? previewClient : productionClient;
@@ -46,6 +60,7 @@ export const getBlogEntries = cache(
       order: "-fields.publishDate", // sorted latest first
       ...addProductFilter(searchParams),
       ...addTextSearchFilter(searchParams),
+      ...addPaginationControls(searchParams),
     } as const;
     return client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
       options,
