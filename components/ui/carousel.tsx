@@ -68,6 +68,8 @@ const Carousel = React.forwardRef<
     );
     const [canScrollPrev, setCanScrollPrev] = React.useState(false);
     const [canScrollNext, setCanScrollNext] = React.useState(false);
+    const [current, setCurrent] = React.useState(0);
+    const [count, setCount] = React.useState(0);
 
     const onSelect = React.useCallback((api: CarouselApi) => {
       if (!api) {
@@ -112,6 +114,19 @@ const Carousel = React.forwardRef<
         return;
       }
 
+      setCount(api.scrollSnapList().length);
+      setCurrent(api.selectedScrollSnap() + 1);
+
+      api.on("select", () => {
+        setCurrent(api.selectedScrollSnap() + 1);
+      });
+    }, [api]);
+
+    React.useEffect(() => {
+      if (!api) {
+        return;
+      }
+
       onSelect(api);
       api.on("reInit", onSelect);
       api.on("select", onSelect);
@@ -138,11 +153,27 @@ const Carousel = React.forwardRef<
         <div
           ref={ref}
           onKeyDownCapture={handleKeyDown}
-          className={cn("relative", className)}
+          className={cn("relative flex flex-col gap-2", className)}
           role="region"
           aria-roledescription="carousel"
           {...props}
         >
+          {(canScrollNext || canScrollPrev) && (
+            <div className="flex gap-2 items-center mx-auto">
+              {Array.from({ length: count }).map((_, i) => (
+                <button
+                  aria-label={`Scroll carousel to slide ${(i + 1).toString()}`}
+                  aria-controls="carousel"
+                  onClick={() => api?.scrollTo(i)}
+                  key={i}
+                  className={cn("rounded-full h-2 w-2", {
+                    "bg-text-secondary": current !== i + 1,
+                    "bg-text": current === i + 1,
+                  })}
+                />
+              ))}
+            </div>
+          )}
           {children}
         </div>
       </CarouselContext.Provider>
@@ -158,7 +189,7 @@ const CarouselContent = React.forwardRef<
   const { carouselRef, orientation } = useCarousel();
 
   return (
-    <div ref={carouselRef} className="overflow-hidden">
+    <div id="carousel" ref={carouselRef} className="overflow-hidden">
       <div
         ref={ref}
         className={cn(
