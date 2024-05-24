@@ -11,6 +11,7 @@ import { isContentfulAsset } from "@/types/utils";
 import { UmaBlogImageAsset } from "@/lib/contentful";
 import Link from "next/link";
 import { isExternal } from "../Link";
+import { IframeContainer } from "./IframeContainer";
 
 // Map text-format types to custom components
 
@@ -26,6 +27,30 @@ const markRenderers: RenderMark = {
 const nodeRenderers: RenderNode = {
   [INLINES.HYPERLINK]: (node, children) => {
     const href = node.data.uri as string;
+    if (
+      href.includes("youtube.com/embed") ||
+      href.includes("player.vimeo.com") ||
+      children?.toString().toLowerCase().includes("iframe") // to handle uncommon cases, creator can set the text to "iframe"
+    ) {
+      return (
+        <IframeContainer>
+          <iframe
+            width="100%"
+            height="100%"
+            src={href}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              clipPath: "inset(0% 0% 0% 0% round 16px)",
+            }}
+          ></iframe>
+        </IframeContainer>
+      );
+    }
     return (
       <Link
         target={isExternal(href) ? "_blank" : undefined}
