@@ -108,6 +108,12 @@ type PostsProps = {
 async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
   const posts = await getBlogEntries(draftModeEnabled, searchParams);
 
+  const pageDetails = {
+    totalPosts: posts.total,
+    pathname: "/",
+    searchParams,
+  };
+
   if (!posts.total) {
     return (
       <h2 className="my-auto flex-1 text-text-secondary text-2xl">
@@ -153,15 +159,9 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
           <PaginationItem>
             <PaginationPrevious
               className={cn({
-                "opacity-40": !canPaginatePrevious({
-                  searchParams,
-                }),
+                "opacity-40": !canPaginatePrevious(pageDetails),
               })}
-              href={getPreviousPaginationLink({
-                totalPosts: posts.total,
-                pathname: "/",
-                searchParams,
-              })}
+              href={getPreviousPaginationLink(pageDetails)}
             />
           </PaginationItem>
           {Array.from({ length: getPaginationPages(posts.total) }).map(
@@ -170,9 +170,7 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
                 <PaginationLink
                   isActive={parseInt(searchParams.skip ?? "0") === i}
                   href={getPaginationControlLink({
-                    totalPosts: posts.total,
-                    pathname: "/",
-                    searchParams,
+                    ...pageDetails,
                     paginationControl: {
                       skip: i,
                     },
@@ -187,16 +185,9 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
           <PaginationItem>
             <PaginationNext
               className={cn({
-                "opacity-40": !canPaginateNext({
-                  totalPosts: posts.total,
-                  searchParams,
-                }),
+                "opacity-40": !canPaginateNext(pageDetails),
               })}
-              href={getNextPaginationLink({
-                totalPosts: posts.total,
-                pathname: "/",
-                searchParams,
-              })}
+              href={getNextPaginationLink(pageDetails)}
             />
           </PaginationItem>
         </PaginationContent>

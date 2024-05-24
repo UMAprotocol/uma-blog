@@ -24,6 +24,7 @@ import { ButtonScrollTo } from "@/components/ButtonScrollTo";
 import { Metadata } from "next";
 import { isContentfulAsset } from "@/types/utils";
 import { CardCarousel } from "@/components/CardCarousel";
+import { redirect } from "next/navigation";
 
 export async function generateStaticParams() {
   const posts = await getAllBlogSlugs(false);
@@ -40,7 +41,14 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = params;
-  const post = await getBlogPostBySlug(slug, false);
+  const { isEnabled } = draftMode();
+
+  const post = await getBlogPostBySlug(slug, isEnabled);
+
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!post) {
+    return redirect("/404");
+  }
 
   // get image
   const imageUrl = (() => {
@@ -58,6 +66,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     metadataBase: new URL("https://uma-blog-alpha.vercel.app"),
+    keywords: post.fields.tags,
+    publisher: "UMA protocol",
     alternates: {
       canonical: "/",
       languages: {
@@ -87,6 +97,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BlogPage({ params: { slug } }: Props) {
   const { isEnabled } = draftMode();
   const post = await getBlogPostBySlug(slug, isEnabled);
+
+  if (!post) {
+    return (
+      <div className="@container page">
+        <h3 className="text-xl font-light mr-auto text-text/75">
+          Article not found
+        </h3>
+      </div>
+    );
+  }
+
   // get 3 more posts of the same product
   const morePosts = await getRelatedPosts(slug, post.fields.product, isEnabled);
 
@@ -101,6 +122,7 @@ export default async function BlogPage({ params: { slug } }: Props) {
           Exit draft Mode
         </Link>
       )}
+
       <div className="@container page">
         <Breadcrumb>
           <BreadcrumbList>

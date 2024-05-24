@@ -18,10 +18,9 @@ export async function GET(request: Request) {
 
   const post = await getBlogPostBySlug(slug, true);
 
-  if (!post.fields.slug) {
-    return new Response("There is no draft content with this slug", {
-      status: 401,
-    });
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!post) {
+    redirect("/404");
   }
 
   // this sets a cookie on the client,

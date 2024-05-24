@@ -82,7 +82,7 @@ export async function getBlogPostBySlug(
     await client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
       options,
     );
-  return entries.items[0];
+  return entries.total ? entries.items[0] : undefined;
 }
 
 // gets 3 most related articles based on topic tags
