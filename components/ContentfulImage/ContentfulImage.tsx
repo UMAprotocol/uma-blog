@@ -56,9 +56,14 @@ export function ContentfulImage({
 
   if (showDescription) {
     return (
-      <figure className="flex p-4 flex-col gap-4 items-center">
+      <figure
+        className="flex p-4 flex-col gap-4 items-center"
+        style={{
+          maxWidth: fill ? undefined : file.details.image?.width,
+        }}
+      >
         <ImageToRender />
-        <figcaption className="text-text-secondary text-sm font-light text-center">
+        <figcaption className="text-text-secondary flex-wrap text-sm font-light text-center">
           {description}
         </figcaption>
       </figure>

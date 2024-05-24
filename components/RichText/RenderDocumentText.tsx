@@ -85,11 +85,7 @@ const nodeRenderers: RenderNode = {
       switch (mimeGroup) {
         case "image":
           return (
-            <ContentfulImage
-              showDescription
-              className="w-full rounded-xl"
-              {...data}
-            />
+            <ContentfulImage showDescription className="rounded-xl" {...data} />
           );
         // TODO: test this, make custom component if necessary
         case "video":
