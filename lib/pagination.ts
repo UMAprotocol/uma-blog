@@ -53,7 +53,6 @@ export function canPaginateNext({
   const newParams = new URLSearchParams(searchParams as ParamsWithValues);
   const skipAsString = newParams.get("skip");
   const skipAsInt = skipAsString ? parseInt(skipAsString) : 0;
-  console.log();
 
   return skipAsInt < Math.floor(totalPosts / PAGINATION_LIMIT);
 }
