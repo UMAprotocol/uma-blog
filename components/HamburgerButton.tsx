@@ -29,6 +29,7 @@ export function HamburgerButton({ className, ...props }: ButtonProps) {
           className={cn("h-[40px] w-[40px]", className)}
           {...props}
         >
+          <span className="sr-only">open/close menu</span>
           <Icon name="hamburger" className="h-[20px] w-[20px] text-text/75" />
         </Button>
       </DropdownMenuTrigger>

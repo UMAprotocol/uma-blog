@@ -29,6 +29,7 @@ export function Header() {
           className="w-[80px] h-full relative"
           href="/"
         >
+          <span className="sr-only">Home</span>
           <Icon name="uma-logo" className="text-text w-full h-full" />
         </Link>
 
@@ -45,6 +46,7 @@ export function Header() {
       {/* MOBILE */}
       <div className="w-full sm:hidden page-padding-x h-[96px] items-center py-4 flex justify-between">
         <Link type="internal" className="w-[80px] h-full relative" href="/">
+          <span className="sr-only">Home</span>
           <Icon name="uma-logo" className="text-text w-full h-full" />
         </Link>
         <HamburgerButton />
