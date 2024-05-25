@@ -54,7 +54,7 @@ export function canPaginateNext({
   const skipAsString = newParams.get("skip");
   const skipAsInt = skipAsString ? parseInt(skipAsString) : 0;
 
-  return skipAsInt < Math.floor(totalPosts / PAGINATION_LIMIT);
+  return skipAsInt + 1 < Math.ceil(totalPosts / PAGINATION_LIMIT);
 }
 
 export function getPreviousPaginationLink({
