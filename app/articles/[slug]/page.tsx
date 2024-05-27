@@ -86,6 +86,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [imageUrl],
     },
     openGraph: {
+      siteName: "UMA Blog",
       title,
       description,
       images: [imageUrl],
