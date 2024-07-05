@@ -167,7 +167,7 @@ const Carousel = React.forwardRef<
                   onClick={() => api?.scrollTo(i)}
                   key={i}
                   className={cn("rounded-full h-2 w-2", {
-                    "bg-text-secondary": current !== i + 1,
+                    "bg-text/40": current !== i + 1,
                     "bg-text": current === i + 1,
                   })}
                 />
