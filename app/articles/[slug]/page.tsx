@@ -157,7 +157,10 @@ export default async function BlogPage({ params: { slug } }: Props) {
 
               <div className="flex flex-wrap gap-2 items-center justify-start">
                 {post.fields.tags.map((tag) => (
-                  <Badge href={`/?tag=${tag}`} key={tag.toLowerCase()}>
+                  <Badge
+                    href={`/?tag=${tag.toLowerCase()}`}
+                    key={tag.toLowerCase()}
+                  >
                     {tag}
                   </Badge>
                 ))}

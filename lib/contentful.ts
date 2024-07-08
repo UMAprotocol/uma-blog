@@ -41,7 +41,7 @@ function addTextSearchFilter(searchParams: SearchParams) {
 function addTagFilter(searchParams: SearchParams) {
   const tag = searchParams.tag;
   if (tag && typeof tag === "string") {
-    return { "fields.tags[in]": decodeURIComponent(tag) };
+    return { "fields.tags[match]": decodeURIComponent(tag) }; // use MATCH to ignore casing
   }
   return {};
 }
