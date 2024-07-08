@@ -7,6 +7,7 @@ export function useFilter() {
   const { params, setParams, removeParams } = useSetQueryParams([
     "product",
     "search",
+    "tag",
   ]);
   const [text, setText] = useState(params.search ?? "");
 
@@ -29,7 +30,7 @@ export function useFilter() {
 
   const clearAll = useCallback(() => {
     setText("");
-    removeParams(["product", "search"]);
+    removeParams(["product", "search", "tag"]);
   }, [removeParams]);
 
   return {
