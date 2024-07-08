@@ -151,13 +151,18 @@ export default async function BlogPage({ params: { slug } }: Props) {
                 <span className="rounded-[50%] bg-text-secondary/50 w-[2px] h-[2px]" />
                 <ReadingTime document={post.fields.content} />
               </div>
-              <h1 className="text-5xl capitalize text-text">
+              <h1 className="text-5xl first-letter:uppercase text-text">
                 {post.fields.title}
               </h1>
 
               <div className="flex flex-wrap gap-2 items-center justify-start">
                 {post.fields.tags.map((tag) => (
-                  <Badge key={tag}>{tag}</Badge>
+                  <Badge
+                    href={`/?tag=${tag.toLowerCase()}`}
+                    key={tag.toLowerCase()}
+                  >
+                    {tag}
+                  </Badge>
                 ))}
               </div>
             </div>

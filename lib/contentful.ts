@@ -38,6 +38,14 @@ function addTextSearchFilter(searchParams: SearchParams) {
   return {};
 }
 
+function addTagFilter(searchParams: SearchParams) {
+  const tag = searchParams.tag;
+  if (tag && typeof tag === "string") {
+    return { "fields.tags[match]": decodeURIComponent(tag) }; // use MATCH to ignore casing
+  }
+  return {};
+}
+
 function addPaginationControls(searchParams: SearchParams) {
   const { skip } = searchParams;
   if (typeof skip === "string") {
@@ -60,6 +68,7 @@ export const getBlogEntries = cache(
       order: "-fields.publishDate", // sorted latest first
       ...addProductFilter(searchParams),
       ...addTextSearchFilter(searchParams),
+      ...addTagFilter(searchParams),
       ...addPaginationControls(searchParams),
     } as const;
     return client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(

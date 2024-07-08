@@ -122,6 +122,8 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
     );
   }
 
+  const isSearchResults = Object.keys(searchParams).length;
+
   return (
     <>
       <div className="grid grid-cols-5 gap-6 w-full">
@@ -138,7 +140,7 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
         <>
           <Divider />
           <div className="uppercase text-text-secondary font-light tracking-wider text-md">
-            most recent articles
+            {isSearchResults ? "articles found" : "most recent articles"}
           </div>
 
           <div className="w-full grid grid-cols-5 gap-6">
