@@ -151,7 +151,7 @@ export default async function BlogPage({ params: { slug } }: Props) {
                 <span className="rounded-[50%] bg-text-secondary/50 w-[2px] h-[2px]" />
                 <ReadingTime document={post.fields.content} />
               </div>
-              <h1 className="text-5xl capitalize text-text">
+              <h1 className="text-5xl first-letter:uppercase text-text">
                 {post.fields.title}
               </h1>
 
