@@ -25,6 +25,7 @@ import { Metadata } from "next";
 import { isContentfulAsset } from "@/types/utils";
 import { CardCarousel } from "@/components/CardCarousel";
 import { redirect } from "next/navigation";
+import { SITE_BASE_URL } from "@/constants/site";
 
 export async function generateStaticParams() {
   const posts = await getAllBlogSlugs(false);
@@ -65,7 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = post.fields.metaDescription;
 
   return {
-    metadataBase: new URL("https://uma-blog-alpha.vercel.app"),
+    metadataBase: new URL(SITE_BASE_URL),
     keywords: post.fields.tags,
     publisher: "UMA protocol",
     alternates: {

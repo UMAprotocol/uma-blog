@@ -25,6 +25,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { createCacheKey, cn } from "@/lib/utils";
+import { SITE_BASE_URL } from "@/constants/site";
 
 export type SearchParams = Record<string, string | undefined>;
 
@@ -38,7 +39,7 @@ const description =
   "UMA's official blog. Get all our latest articles about the optimistic oracle and oSnap.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://uma-blog-alpha.vercel.app"),
+  metadataBase: new URL(SITE_BASE_URL),
   alternates: {
     canonical: "/",
     languages: {
