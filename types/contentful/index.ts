@@ -16,6 +16,12 @@ export type {
   TypeCareersPageFields,
   TypeCareersPageSkeleton,
 } from "./TypeCareersPage";
+export { isTypeCodeBlock } from "./TypeCodeBlock";
+export type {
+  TypeCodeBlock,
+  TypeCodeBlockFields,
+  TypeCodeBlockSkeleton,
+} from "./TypeCodeBlock";
 export { isTypeSynth } from "./TypeSynth";
 export type {
   TypeSynth,

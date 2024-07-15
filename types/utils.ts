@@ -1,4 +1,5 @@
 import { UmaBlogImageAsset } from "@/lib/contentful";
+import { TypeCodeBlock } from "./contentful";
 
 export type NoNullValuesOfObject<T extends object> = {
   [Property in keyof T]-?: NonNullable<T[Property]>;

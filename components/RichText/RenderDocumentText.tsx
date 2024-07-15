@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { BLOCKS, MARKS, Document, INLINES } from "@contentful/rich-text-types";
 import {
   RenderMark,
@@ -12,6 +14,7 @@ import { UmaBlogImageAsset } from "@/lib/contentful";
 import Link from "next/link";
 import { isExternal } from "../Link";
 import { IframeContainer } from "./IframeContainer";
+import { Code } from "./Code";
 
 // Map text-format types to custom components
 
@@ -82,7 +85,14 @@ const nodeRenderers: RenderNode = {
   [BLOCKS.HEADING_6]: (_, children) => (
     <h6 className="text-xl text-text">{children}</h6>
   ),
-  [BLOCKS.EMBEDDED_ENTRY]: (_, children) => <div>{children}</div>,
+  [BLOCKS.EMBEDDED_ENTRY]: (node, children) => {
+    const { sys, fields } = node.data.target;
+    if (sys?.contentType?.sys?.id === "codeBlock") {
+      return <Code codeString={fields.code} language={fields.language} />;
+    }
+
+    return <div>{children}</div>;
+  },
   [BLOCKS.EMBEDDED_RESOURCE]: (_, children) => <div>{children}</div>,
   [BLOCKS.UL_LIST]: (_, children) => (
     <ul className="list-disc pl-8">{children}</ul>
