@@ -46,7 +46,7 @@
     --ring: 0 0% 83.1%;
   }
 
-  *,
+  *:not(pre *),
   html {
     /* Making sure text size is only controlled by font-size */
     -webkit-text-size-adjust: none;
