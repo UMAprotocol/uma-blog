@@ -1,6 +1,9 @@
 import { env } from "@/app/env";
 import { SearchParams } from "@/app/page";
-import { TypeBlogPostSkeleton } from "@/types/contentful";
+import {
+  TypeBlogPostSkeleton,
+  TypeCodeBlockSkeleton,
+} from "@/types/contentful";
 import { HasFields } from "@/types/utils";
 import { documentToPlainTextString } from "@contentful/rich-text-plain-text-renderer";
 import { Document } from "@contentful/rich-text-types";
@@ -129,6 +132,20 @@ export async function getAllBlogSlugs(isDraft: boolean) {
   return entries.items;
 }
 
+export async function getCodeBlocks() {
+  const entries =
+    await productionClient.withoutUnresolvableLinks.getEntries<TypeCodeBlockSkeleton>(
+      {
+        content_type: "codeBlock",
+      },
+    );
+
+  return entries.items;
+}
+
+export type CodeBlock = Awaited<ReturnType<typeof getCodeBlocks>>[number];
+export type CodeBlockWithFields = HasFields<CodeBlock>;
+
 // Since we might chain multiple modifiers on the client,
 // it is more accurate to infer the response types
 export type UmaBlogEntries = Awaited<ReturnType<typeof getBlogEntries>>;
@@ -139,7 +156,7 @@ export type UmaProducts = UmaBlogEntry["fields"]["product"];
 
 export type ImageWithFields = HasFields<UmaBlogImageAsset>;
 
-const averageReadingSpeed = 238; //words per minute
+const averageReadingSpeed = 238; // words per minute
 
 export function getReadingTimeMinutes(document: Document) {
   const rawText = documentToPlainTextString(document);

@@ -1,5 +1,4 @@
-import { UmaBlogImageAsset } from "@/lib/contentful";
-import { TypeCodeBlock } from "./contentful";
+import { CodeBlockWithFields, UmaBlogImageAsset } from "@/lib/contentful";
 
 export type NoNullValuesOfObject<T extends object> = {
   [Property in keyof T]-?: NonNullable<T[Property]>;
@@ -32,5 +31,19 @@ export function isContentfulAsset(
     maybeContentfulAsset !== undefined &&
     "fields" in maybeContentfulAsset &&
     hasNoNullValues(maybeContentfulAsset.fields)
+  );
+}
+
+export function isContentfulCodeBlock(
+  maybeContentfulCodeBlock: object,
+): maybeContentfulCodeBlock is CodeBlockWithFields {
+  return (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+    (maybeContentfulCodeBlock as any)?.sys?.contentType?.sys?.id ===
+      "codeBlock" &&
+    "fields" in maybeContentfulCodeBlock &&
+    typeof maybeContentfulCodeBlock.fields === "object" &&
+    maybeContentfulCodeBlock.fields !== null &&
+    hasNoNullValues(maybeContentfulCodeBlock.fields)
   );
 }
