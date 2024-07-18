@@ -14,10 +14,12 @@ export const env = createEnv({
     ENVIRONMENT: z.string(),
     PREVIEW_SECRET: z.string(),
     REVALIDATE_SECRET: z.string(),
-    GOOGLE_ANALYTICS_TAG: z.string(),
     MAILCHIMP_API_KEY: z.string(),
     MAILCHIMP_SERVER_PREFIX: z.string(),
     MAILCHIMP_LIST_ID: z.string(),
+  },
+  client: {
+    NEXT_PUBLIC_GOOGLE_ANALYTICS_TAG: z.string(),
   },
   // If you're using Next.js < 13.4.4, you'll need to specify the runtimeEnv manually
   runtimeEnv: {
@@ -28,10 +30,11 @@ export const env = createEnv({
     ENVIRONMENT: process.env.ENVIRONMENT,
     PREVIEW_SECRET: process.env.PREVIEW_SECRET,
     REVALIDATE_SECRET: process.env.REVALIDATE_SECRET,
-    GOOGLE_ANALYTICS_TAG: process.env.GOOGLE_ANALYTICS_TAG,
     MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY,
     MAILCHIMP_SERVER_PREFIX: process.env.MAILCHIMP_SERVER_PREFIX,
     MAILCHIMP_LIST_ID: process.env.MAILCHIMP_LIST_ID,
+    NEXT_PUBLIC_GOOGLE_ANALYTICS_TAG:
+      process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_TAG,
   },
   // For Next.js >= 13.4.4, you only need to destructure client variables:
   // experimental__runtimeEnv: {
