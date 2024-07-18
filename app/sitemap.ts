@@ -1,9 +1,9 @@
 import { SITE_BASE_URL } from "@/constants/site";
-import { getBlogEntries } from "@/lib/contentful";
+import { getAllBlogEntries } from "@/lib/contentful";
 import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const entries = await getBlogEntries(false, {});
+  const entries = await getAllBlogEntries();
 
   const articles = entries.items.map((post) => {
     return {
