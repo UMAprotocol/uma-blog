@@ -62,6 +62,20 @@ function addPaginationControls(searchParams: SearchParams) {
   };
 }
 
+// TODO: currently the max we can fetch is 1000 entries with one request. Add logic to batch requests IF there are more than 1000 entries in total.
+export async function getAllBlogEntries() {
+  const options = {
+    content_type: contentType,
+    "fields.content[exists]": true, // no empty posts
+    order: "-fields.publishDate", // sorted latest first
+    limit: 1000, // max limit
+    skip: 0,
+  } as const;
+  return productionClient.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
+    options,
+  );
+}
+
 export const getBlogEntries = cache(
   async (isDraft: boolean, searchParams: SearchParams) => {
     const client = isDraft ? previewClient : productionClient;

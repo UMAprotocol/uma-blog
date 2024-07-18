@@ -16,7 +16,6 @@ export type TypeCodeBlockSkeleton = EntrySkeletonType<
   TypeCodeBlockFields,
   "codeBlock"
 >;
-
 export type TypeCodeBlock<
   Modifiers extends ChainModifiers,
   Locales extends LocaleCode = LocaleCode,

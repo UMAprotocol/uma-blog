@@ -76,8 +76,6 @@ export function Card({ post, size, className, ...props }: CardProps) {
               <span className="rounded-[50%] bg-text-secondary/50 w-[2px] h-[2px]" />
               <ReadingTime document={post.fields.content} />
             </div>
-
-            {/* TODO: reading time & Publish date */}
             <h2 className="text-text line-clamp-2">{post.fields.title}</h2>
           </div>
 
