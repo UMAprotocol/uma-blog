@@ -72,12 +72,12 @@ export function Filter({ className }: FilterProps) {
             <SelectGroup>
               <SelectLabel>Products</SelectLabel>
               {products.map((product) => (
-                <SelectItem
-                  className="capitalize"
-                  key={product}
-                  value={product}
-                >
-                  {product}
+                <SelectItem key={product} value={product}>
+                  {product === "osnap" ? (
+                    <span>oSnap</span>
+                  ) : (
+                    <span className="capitalize">{product}</span>
+                  )}
                 </SelectItem>
               ))}
             </SelectGroup>
