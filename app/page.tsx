@@ -123,12 +123,12 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
     );
   }
 
-  const isSearchResults = Object.keys(searchParams).length ? true : false;
+  const isSearchResults = Object.values(searchParams).length ? true : false;
 
   return (
     <>
       <div className="uppercase text-text-secondary font-light tracking-wider text-lg">
-        {isSearchResults ? "results" : "most recent articles"}
+        {isSearchResults ? "search results" : "most recent articles"}
       </div>
 
       <div className="grid grid-cols-5 gap-6 w-full">
@@ -139,7 +139,12 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
           key={posts.items[0].sys.id}
           post={posts.items[0]}
         />
-        <Subscribe className="col-span-5 @3xl:aspect-[1.2/1] self-auto @3xl:col-span-1" />
+        <Subscribe
+          className={cn([
+            "col-span-5 @3xl:aspect-[1.2/1] self-auto @3xl:col-span-1",
+            isSearchResults ? "hidden @3xl:flex" : "visible",
+          ])}
+        />
       </div>
 
       {posts.total > 1 ? (

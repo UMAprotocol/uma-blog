@@ -97,7 +97,7 @@ export function Filter({ className }: FilterProps) {
         )}
       </div>
       {tag && (
-        <div className="uppercase mt-2 text-xl text-text-secondary font-light tracking-wider ">
+        <div className="uppercase mt-2 text-sm text-text-secondary font-light tracking-wider">
           topic: <span className="text-text">{tag}</span>
         </div>
       )}
