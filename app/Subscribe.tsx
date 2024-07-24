@@ -40,7 +40,7 @@ export function Subscribe({ className }: Props) {
   return (
     <div
       className={cn(
-        " flex flex-col items-center justify-evenly p-4 text-center card",
+        "flex flex-col items-center justify-evenly p-4 text-center card",
         className,
       )}
     >

@@ -32,7 +32,7 @@ export type BadgeProps = React.HTMLAttributes<HTMLDivElement> &
     href?: string;
   };
 
-function Badge({ className, variant, href, ...props }: BadgeProps) {
+function Badge({ className, variant, role, href, ...props }: BadgeProps) {
   if (href) {
     return (
       <Link type="internal" href={href}>
@@ -44,7 +44,10 @@ function Badge({ className, variant, href, ...props }: BadgeProps) {
     );
   }
   return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props} />
+    <div
+      className={cn(badgeVariants({ variant, role: "display" }), className)}
+      {...props}
+    />
   );
 }
 

@@ -123,28 +123,36 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
     );
   }
 
-  const isSearchResults = Object.keys(searchParams).length;
+  const isSearchResults = Object.values(searchParams).length ? true : false;
 
   return (
     <>
+      <div className="uppercase text-text-secondary font-light tracking-wider text-lg">
+        {isSearchResults ? "search results" : "most recent articles"}
+      </div>
+
       <div className="grid grid-cols-5 gap-6 w-full">
         <Card
-          size="large"
+          size={isSearchResults ? "small" : "large"}
           className="col-span-5 @3xl:col-span-4"
           href={`/articles/${posts.items[0].fields.slug}`}
           key={posts.items[0].sys.id}
           post={posts.items[0]}
         />
-        <Subscribe className="col-span-5 @3xl:aspect-[1.2/1] self-auto @3xl:col-span-1" />
+        <Subscribe
+          className={cn([
+            "col-span-5 @3xl:aspect-[1.2/1] self-auto @3xl:col-span-1",
+            isSearchResults ? "hidden @3xl:flex" : "visible",
+          ])}
+        />
       </div>
+
       {posts.total > 1 ? (
         <>
-          <Divider />
-          <div className="uppercase text-text-secondary font-light tracking-wider text-md">
-            {isSearchResults ? "articles found" : "most recent articles"}
-          </div>
-
           <div className="w-full grid grid-cols-5 gap-6">
+            {!isSearchResults && (
+              <Divider className="col-span-5 @3xl:col-span-4" />
+            )}
             {posts.items.slice(1).map((post) => (
               <Card
                 className="col-span-5 @3xl:col-span-4"

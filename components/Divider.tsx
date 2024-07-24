@@ -14,8 +14,8 @@ export function Divider({
       className={cn(
         "bg-border rounded-full",
         {
-          "w-auto h-[1px]": orientation === "horizontal",
-          "h-auto w-[1px]": orientation === "vertical",
+          "w-full h-[1px]": orientation === "horizontal",
+          "h-full w-[1px]": orientation === "vertical",
         },
         className,
       )}

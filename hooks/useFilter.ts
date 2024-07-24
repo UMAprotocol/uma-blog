@@ -28,6 +28,12 @@ export function useFilter() {
     });
   }
 
+  function handleTagChange(value: string) {
+    setParams({
+      tag: value,
+    });
+  }
+
   const clearAll = useCallback(() => {
     setText("");
     removeParams(["product", "search", "tag"]);
@@ -37,6 +43,8 @@ export function useFilter() {
     text,
     handleTextChange,
     productParam: params.product,
+    tag: params.tag,
+    handleTagChange,
     handleProductChange,
     clearAll,
   };
