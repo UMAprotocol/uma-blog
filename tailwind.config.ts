@@ -26,7 +26,7 @@ const config = {
         "outer-max-width": "var(--outer-content-max-width)",
       },
       colors: {
-        border: "hsl(var(--text-primary) / 0.03)",
+        border: "hsl(var(--text-primary) / 0.05)",
         input: "hsl(var(--input) / <alpha-value>)",
         ring: "hsl(var(--ring) / <alpha-value>)",
         "line-pattern": {

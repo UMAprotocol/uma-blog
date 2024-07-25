@@ -168,7 +168,7 @@ export default async function BlogPage({ params: { slug } }: Props) {
               </div>
             </div>
 
-            <Divider className="my-10" />
+            <Divider className="my-10 bg-text-secondary/20" />
 
             {renderDocumentText(post.fields.content)}
           </article>
