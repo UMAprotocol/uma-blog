@@ -1,4 +1,5 @@
-import NextLink, { LinkProps } from "next/link";
+import { LinkProps } from "next/link";
+import { Link as NextLink } from "next-view-transitions";
 import { Icon } from "./Icon";
 import { cn } from "@/lib/utils";
 

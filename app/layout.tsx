@@ -3,6 +3,7 @@ import { halyardDisplay } from "./fonts";
 import "./globals.css";
 import { Providers } from "../providers/Providers";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { ViewTransitions } from "next-view-transitions";
 
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/Header";
@@ -19,20 +20,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      suppressHydrationWarning
-      lang="en"
-      className={cn("scroll-smooth", halyardDisplay.variable)}
-    >
-      <body className="min-h-dvh h-full items-center flex flex-col bg-background text-text w-screen">
-        <Providers>
-          <Header />
-          <main className="w-full m-x-auto items-center flex flex-col pb-8 h-full min-h-[calc(100dvh-var(--header-height)-var(--page-padding-bottom))]">
-            {children}
-          </main>
-        </Providers>
-      </body>
-      <GoogleAnalytics gaId={env.NEXT_PUBLIC_GOOGLE_ANALYTICS_TAG} />
-    </html>
+    <ViewTransitions>
+      <html
+        suppressHydrationWarning
+        lang="en"
+        className={cn("scroll-smooth", halyardDisplay.variable)}
+      >
+        <body className="min-h-dvh h-full items-center flex flex-col bg-background text-text w-screen">
+          <Providers>
+            <Header />
+            <main className="w-full m-x-auto items-center flex flex-col pb-8 h-full min-h-[calc(100dvh-var(--header-height)-var(--page-padding-bottom))]">
+              {children}
+            </main>
+          </Providers>
+        </body>
+        <GoogleAnalytics gaId={env.NEXT_PUBLIC_GOOGLE_ANALYTICS_TAG} />
+      </html>
+    </ViewTransitions>
   );
 }

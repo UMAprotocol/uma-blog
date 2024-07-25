@@ -29,3 +29,15 @@ export function createCacheKey(options: {
 
   return newParamString.toString();
 }
+
+export function toCSSIdentifier(fileName: string) {
+  // Replace spaces and other invalid characters with hyphens
+  let cssIdentifier = fileName.replace(/[^a-zA-Z0-9]/g, "-");
+
+  // Ensure it does not start with a digit
+  if (/^[0-9]/.test(cssIdentifier)) {
+    cssIdentifier = "id-" + cssIdentifier;
+  }
+
+  return cssIdentifier;
+}
