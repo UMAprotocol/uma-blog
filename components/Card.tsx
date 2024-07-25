@@ -3,7 +3,8 @@ import { cn } from "@/lib/utils";
 import { VariantProps, cva } from "class-variance-authority";
 import { Badge } from "./ui/badge";
 import { ContentfulImageWrapped } from "./ContentfulImage/ContentfulImageWrapped";
-import Link, { LinkProps } from "next/link";
+import { LinkProps } from "next/link";
+import { Link } from "next-view-transitions";
 import { PublishDate } from "./PublishDate";
 import { ReadingTime } from "./ReadingTime";
 
