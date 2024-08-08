@@ -21,6 +21,7 @@ const nextConfig = {
       },
     ];
   },
+  productionBrowserSourceMaps: true, // for seo
   images: {
     remotePatterns: [
       {
