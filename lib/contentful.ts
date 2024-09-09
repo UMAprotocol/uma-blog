@@ -9,7 +9,6 @@ import { documentToPlainTextString } from "@contentful/rich-text-plain-text-rend
 import { Document } from "@contentful/rich-text-types";
 import { createClient } from "contentful";
 import words from "lodash.words";
-import { cache } from "react";
 import { PAGINATION_LIMIT } from "./pagination";
 
 const contentType = "blogPost";
@@ -76,23 +75,24 @@ export async function getAllBlogEntries() {
   );
 }
 
-export const getBlogEntries = cache(
-  async (isDraft: boolean, searchParams: SearchParams) => {
-    const client = isDraft ? previewClient : productionClient;
-    const options = {
-      content_type: contentType,
-      "fields.content[exists]": true, // no empty posts
-      order: "-fields.publishDate", // sorted latest first
-      ...addProductFilter(searchParams),
-      ...addTextSearchFilter(searchParams),
-      ...addTagFilter(searchParams),
-      ...addPaginationControls(searchParams),
-    } as const;
-    return client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
-      options,
-    );
-  },
-);
+export const getBlogEntries = async (
+  isDraft: boolean,
+  searchParams: SearchParams,
+) => {
+  const client = isDraft ? previewClient : productionClient;
+  const options = {
+    content_type: contentType,
+    "fields.content[exists]": true, // no empty posts
+    order: "-fields.publishDate", // sorted latest first
+    ...addProductFilter(searchParams),
+    ...addTextSearchFilter(searchParams),
+    ...addTagFilter(searchParams),
+    ...addPaginationControls(searchParams),
+  } as const;
+  return client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
+    options,
+  );
+};
 
 export async function getBlogPostBySlug(
   slug: UmaBlogEntry["fields"]["slug"],
@@ -102,7 +102,7 @@ export async function getBlogPostBySlug(
   const options = {
     content_type: contentType,
     limit: 1,
-    "fields.slug[match]": slug,
+    "fields.slug": slug,
   } as const;
   const entries =
     await client.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
