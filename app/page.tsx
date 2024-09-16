@@ -42,9 +42,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_BASE_URL),
   alternates: {
     canonical: "/",
-    languages: {
-      "en-US": "/en-US",
-    },
   },
   title,
   description,

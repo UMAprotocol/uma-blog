@@ -70,10 +70,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     keywords: post.fields.tags,
     publisher: "UMA protocol",
     alternates: {
-      canonical: "/",
-      languages: {
-        "en-US": "/en-US",
-      },
+      canonical: `/articles/${slug}`,
     },
     title,
     description,
