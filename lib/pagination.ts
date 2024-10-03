@@ -9,7 +9,7 @@ type ControlOptions = {
   searchParams: SearchParams;
   totalPosts: UmaBlogEntries["total"];
   paginationControl: {
-    skip: number;
+    page: number;
     // limit: number;
   };
 };
@@ -22,10 +22,10 @@ export function getPaginationControlLink({
   paginationControl,
 }: ControlOptions) {
   const newParams = new URLSearchParams(searchParams as ParamsWithValues);
-  if (!(paginationControl.skip > 0)) {
-    newParams.delete("skip");
+  if (!(paginationControl.page > 1)) {
+    newParams.delete("page");
   } else {
-    newParams.set("skip", encodeURIComponent(paginationControl.skip));
+    newParams.set("page", encodeURIComponent(paginationControl.page));
   }
   // newParams.set("limit", encodeURIComponent(paginationControl.limit));
   return `${pathname}?${newParams.toString()}`;
@@ -37,10 +37,10 @@ export function canPaginatePrevious({
   searchParams: SearchParams;
 }) {
   const newParams = new URLSearchParams(searchParams as ParamsWithValues);
-  const skipAsString = newParams.get("skip");
-  const skipAsInt = skipAsString ? parseInt(skipAsString) : 0;
+  const pageAsString = newParams.get("page");
+  const pageAsInt = pageAsString ? parseInt(pageAsString) : 1;
 
-  return skipAsInt > 0;
+  return pageAsInt > 1;
 }
 
 export function canPaginateNext({
@@ -51,10 +51,10 @@ export function canPaginateNext({
   searchParams: SearchParams;
 }) {
   const newParams = new URLSearchParams(searchParams as ParamsWithValues);
-  const skipAsString = newParams.get("skip");
-  const skipAsInt = skipAsString ? parseInt(skipAsString) : 0;
+  const pageAsString = newParams.get("page");
+  const pageAsInt = pageAsString ? parseInt(pageAsString) : 1;
 
-  return skipAsInt + 1 < Math.ceil(totalPosts / PAGINATION_LIMIT);
+  return pageAsInt < Math.ceil(totalPosts / PAGINATION_LIMIT);
 }
 
 export function getPreviousPaginationLink({
@@ -63,15 +63,15 @@ export function getPreviousPaginationLink({
   searchParams,
 }: Omit<ControlOptions, "paginationControl">) {
   const newParams = new URLSearchParams(searchParams as ParamsWithValues);
-  const skipAsString = newParams.get("skip");
-  const skipAsInt = skipAsString ? parseInt(skipAsString) : 0;
+  const pageAsString = newParams.get("page");
+  const pageAsInt = pageAsString ? parseInt(pageAsString) : 1;
   if (canPaginatePrevious({ searchParams })) {
     return getPaginationControlLink({
       totalPosts,
       pathname,
       searchParams,
       paginationControl: {
-        skip: skipAsInt - 1,
+        page: pageAsInt - 1,
       },
     });
   }
@@ -84,8 +84,8 @@ export function getNextPaginationLink({
   searchParams,
 }: Omit<ControlOptions, "paginationControl">) {
   const newParams = new URLSearchParams(searchParams as ParamsWithValues);
-  const skipAsString = newParams.get("skip");
-  const skipAsInt = skipAsString ? parseInt(skipAsString) : 0;
+  const pageAsString = newParams.get("page");
+  const pageAsInt = pageAsString ? parseInt(pageAsString) : 1;
 
   if (canPaginateNext({ searchParams, totalPosts })) {
     return getPaginationControlLink({
@@ -93,7 +93,7 @@ export function getNextPaginationLink({
       pathname,
       searchParams,
       paginationControl: {
-        skip: skipAsInt + 1,
+        page: pageAsInt + 1,
       },
     });
   }

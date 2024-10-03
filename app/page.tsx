@@ -174,11 +174,11 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
             (_, i) => (
               <PaginationItem key={i}>
                 <PaginationLink
-                  isActive={parseInt(searchParams.skip ?? "0") === i}
+                  isActive={parseInt(searchParams.page ?? "1") === i + 1}
                   href={getPaginationControlLink({
                     ...pageDetails,
                     paginationControl: {
-                      skip: i,
+                      page: i + 1,
                     },
                   })}
                 >

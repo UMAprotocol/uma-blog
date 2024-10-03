@@ -8,14 +8,14 @@ export function useFilter() {
     "product",
     "search",
     "tag",
-    "skip",
+    "page",
   ]);
   const [text, setText] = useState(params.search ?? "");
 
   const debouncedSetParam = useDebouncedCallback((value: string) => {
     setParams({
       search: value,
-      skip: undefined,
+      page: undefined,
     });
   }, 300);
 
@@ -27,21 +27,21 @@ export function useFilter() {
   function handleProductChange(prod: UmaProducts) {
     setParams({
       product: prod,
-      skip: undefined,
+      page: undefined,
     });
   }
 
   function handleTagChange(value: string) {
     setParams({
       tag: value,
-      skip: undefined,
+      page: undefined,
     });
-    removeParams(["skip"]);
+    removeParams(["page"]);
   }
 
   const clearAll = useCallback(() => {
     setText("");
-    removeParams(["product", "search", "tag", "skip"]);
+    removeParams(["product", "search", "tag", "page"]);
   }, [removeParams]);
 
   return {
