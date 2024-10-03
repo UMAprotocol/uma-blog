@@ -49,11 +49,11 @@ function addTagFilter(searchParams: SearchParams) {
 }
 
 function addPaginationControls(searchParams: SearchParams) {
-  const { skip } = searchParams;
-  if (typeof skip === "string") {
+  const { page } = searchParams;
+  if (typeof page === "string") {
     return {
       limit: PAGINATION_LIMIT,
-      skip: parseInt(skip) * PAGINATION_LIMIT,
+      skip: (parseInt(page) - 1) * PAGINATION_LIMIT,
     };
   }
   return {
