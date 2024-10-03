@@ -72,8 +72,6 @@ export default function Home({ searchParams }: PageProps) {
     searchParams,
   });
 
-  // TODO: create nice loading skeleton for posts
-
   return (
     <div className="relative @container page">
       <Filter className="w-full" />
