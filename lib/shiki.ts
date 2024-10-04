@@ -1,4 +1,4 @@
-import { createHighlighter } from "shiki";
+import { createHighlighter, Highlighter } from "shiki";
 
 const initializeHighlighter = createHighlighter({
   themes: ["github-light", "github-dark"],
@@ -20,7 +20,7 @@ const initializeHighlighter = createHighlighter({
 });
 
 // singleton
-let highlighter: Awaited<ReturnType<typeof createHighlighter>> | undefined;
+let highlighter: Highlighter | undefined;
 
 export async function highlight(code: string, language: string) {
   if (!highlighter) {
