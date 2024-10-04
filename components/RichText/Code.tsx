@@ -1,33 +1,17 @@
-"use client";
-import { useTheme } from "next-themes";
-import { Prism } from "react-syntax-highlighter";
-import * as styles from "react-syntax-highlighter/dist/esm/styles/prism";
+import { highlight } from "@/lib/shiki";
 
 type CodeProps = {
   codeString: string;
   language: string;
 };
 
-export function Code({ codeString, language }: CodeProps) {
-  const { resolvedTheme } = useTheme();
-
-  const codeTheme = resolvedTheme === "dark" ? styles.oneDark : styles.oneLight;
+export async function Code({ codeString, language }: CodeProps) {
+  const out = await highlight(codeString, language);
 
   return (
-    <Prism
-      customStyle={{
-        width: "100%",
-        maxWidth: "100%",
-        borderRadius: "12px",
-        padding: "12px",
-        fontSize: "14px",
-        border: "1px solid hsl(var(--text-primary) / 0.03) !important",
-      }}
-      wrapLines
-      language={language}
-      style={codeTheme}
-    >
-      {codeString}
-    </Prism>
+    <div
+      className="w-full [&>pre]:w-full [&>pre]:py-5 [&>pre]:px-4 [&>pre]:rounded-sm [&>pre]:w-full-max-w-[100%] [&>pre]:overflow-x-scroll"
+      dangerouslySetInnerHTML={{ __html: out }}
+    />
   );
 }
