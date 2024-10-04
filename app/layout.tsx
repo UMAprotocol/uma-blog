@@ -29,7 +29,7 @@ export default function RootLayout({
         <body className="min-h-dvh h-full items-center flex flex-col bg-background text-text w-screen">
           <Providers>
             <Header />
-            <main className="w-full m-x-auto items-center flex flex-col pb-8 h-full min-h-[calc(100dvh-var(--header-height)-var(--page-padding-bottom))]">
+            <main className="w-full overflow-x-clip m-x-auto items-center flex flex-col pb-8 h-full min-h-[calc(100dvh-var(--header-height)-var(--page-padding-bottom))]">
               {children}
             </main>
           </Providers>
