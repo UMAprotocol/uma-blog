@@ -15,6 +15,7 @@ import Link from "next/link";
 import { isExternal } from "../Link";
 import { IframeContainer } from "./IframeContainer";
 import { Code } from "./Code";
+import { Video } from "./Video";
 
 // Map text-format types to custom components
 
@@ -116,7 +117,7 @@ const nodeRenderers: RenderNode = {
   [BLOCKS.EMBEDDED_ASSET]: (node) => {
     const data = node.data.target as UmaBlogImageAsset;
     if (isContentfulAsset(data)) {
-      const { file, description, title } = data.fields;
+      const { file } = data.fields;
       const mimeGroup = file.contentType.split("/")[0]; // image / video etc
 
       switch (mimeGroup) {
@@ -124,24 +125,8 @@ const nodeRenderers: RenderNode = {
           return (
             <ContentfulImage showDescription className="rounded-xl" {...data} />
           );
-        // TODO: test this, make custom component if necessary
         case "video":
-          return (
-            <figure className="flex flex-col items-center gap-4">
-              <video
-                controls
-                playsInline
-                title={title}
-                aria-description={description}
-                src={file.url}
-              >
-                {description}
-              </video>
-              <figcaption className="text-text-secondary flex-wrap text-sm font-light text-center">
-                {description}
-              </figcaption>
-            </figure>
-          );
+          return <Video {...data.fields} />;
         // TODO: add other asset types, handle them
         default:
           return <p>unknown file type</p>;
