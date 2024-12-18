@@ -127,15 +127,20 @@ const nodeRenderers: RenderNode = {
         // TODO: test this, make custom component if necessary
         case "video":
           return (
-            <video
-              controls
-              playsInline
-              title={title}
-              aria-description={description}
-              src={file.url}
-            >
-              {description}
-            </video>
+            <figure className="flex flex-col items-center gap-4">
+              <video
+                controls
+                playsInline
+                title={title}
+                aria-description={description}
+                src={file.url}
+              >
+                {description}
+              </video>
+              <figcaption className="text-text-secondary flex-wrap text-sm font-light text-center">
+                {description}
+              </figcaption>
+            </figure>
           );
         // TODO: add other asset types, handle them
         default:
