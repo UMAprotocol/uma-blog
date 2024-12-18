@@ -127,7 +127,13 @@ const nodeRenderers: RenderNode = {
         // TODO: test this, make custom component if necessary
         case "video":
           return (
-            <video title={title} aria-description={description} src={file.url}>
+            <video
+              controls
+              playsInline
+              title={title}
+              aria-description={description}
+              src={file.url}
+            >
               {description}
             </video>
           );
