@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { DEFAULT_PAGINATION_LIMIT } from "@/lib/pagination";
 
 const POST_LIMIT_OPTIONS = [
   { value: "5", label: "5 posts" },
@@ -22,7 +23,8 @@ export function PostsPerPageSelect() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const currentLimit = searchParams.get("limit") ?? "10"; // Default to 10
+  const currentLimit =
+    searchParams.get("limit") ?? String(DEFAULT_PAGINATION_LIMIT);
 
   const handleValueChange = (value: string) => {
     const params = new URLSearchParams(searchParams);

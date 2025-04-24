@@ -4,6 +4,9 @@ import { UmaBlogEntries } from "./contentful";
 // Default limit if not specified
 export const DEFAULT_PAGINATION_LIMIT = 10;
 
+// Default number of pagination links to show
+export const DEFAULT_VISIBLE_PAGES = 5;
+
 type ControlOptions = {
   pathname: string;
   searchParams: SearchParams;
@@ -143,7 +146,7 @@ export function getPaginationPages(
 export function getVisiblePageNumbers(
   currentPage: number,
   totalPages: number,
-  maxVisible = 4, // max number that actually looks good on mobile
+  maxVisible = DEFAULT_VISIBLE_PAGES, // max number that actually looks good on mobile
 ): number[] {
   if (totalPages <= maxVisible) {
     return Array.from({ length: totalPages }, (_, i) => i + 1);

@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { PostsPerPageSelect } from "./PostsPerPageSelect";
 import {
   Pagination,
@@ -39,7 +38,7 @@ export function PaginationControls({
   totalPages,
   className,
 }: PaginationControlsProps) {
-  const visiblePages = getVisiblePageNumbers(currentPage, totalPages, 5);
+  const visiblePages = getVisiblePageNumbers(currentPage, totalPages);
 
   const pageDetails = {
     totalPosts,
