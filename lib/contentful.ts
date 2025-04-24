@@ -62,11 +62,10 @@ function addPaginationControls(searchParams: SearchParams) {
 }
 
 export async function getAllBlogEntries() {
-  const MAX_BATCH_SIZE = 10; // maximum num of posts we can fetch per request from contentful
+  const MAX_BATCH_SIZE = 1000; // maximum num of posts we can fetch per request from contentful
   let skip = 0;
   let hasMoreEntries = true;
 
-  // Store all entries
   const allItems = [];
   let totalItems = 0;
 
@@ -88,16 +87,13 @@ export async function getAllBlogEntries() {
     allItems.push(...response.items);
     totalItems = response.total;
 
-    // If we got fewer items than our batch size, we've reached the end
     if (response.items.length < MAX_BATCH_SIZE) {
       hasMoreEntries = false;
     } else {
-      // Prepare for the next batch
       skip += MAX_BATCH_SIZE;
     }
   }
 
-  // Create response object with the same shape as Contentful's response
   return {
     items: allItems,
     includes: {},
