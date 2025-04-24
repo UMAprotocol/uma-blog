@@ -9,7 +9,7 @@ import { documentToPlainTextString } from "@contentful/rich-text-plain-text-rend
 import { Document } from "@contentful/rich-text-types";
 import { createClient } from "contentful";
 import words from "lodash.words";
-import { PAGINATION_LIMIT } from "./pagination";
+import { getLimitFromSearchParams } from "./pagination";
 
 const contentType = "blogPost";
 
@@ -50,14 +50,24 @@ function addTagFilter(searchParams: SearchParams) {
 
 function addPaginationControls(searchParams: SearchParams) {
   const { page } = searchParams;
+  const limit = getLimitFromSearchParams(searchParams);
+
+  // If showing all posts, don't use pagination
+  if (limit === "all") {
+    return {
+      limit: 1000, // Use a large number to get all posts
+      skip: 0,
+    };
+  }
+
   if (typeof page === "string") {
     return {
-      limit: PAGINATION_LIMIT,
-      skip: (parseInt(page) - 1) * PAGINATION_LIMIT,
+      limit,
+      skip: (parseInt(page) - 1) * limit,
     };
   }
   return {
-    limit: PAGINATION_LIMIT,
+    limit,
   };
 }
 
