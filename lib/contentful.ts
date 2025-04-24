@@ -9,7 +9,7 @@ import { documentToPlainTextString } from "@contentful/rich-text-plain-text-rend
 import { Document } from "@contentful/rich-text-types";
 import { createClient } from "contentful";
 import words from "lodash.words";
-import { PAGINATION_LIMIT } from "./pagination";
+import { getLimitFromSearchParams } from "./pagination";
 
 const contentType = "blogPost";
 
@@ -50,29 +50,67 @@ function addTagFilter(searchParams: SearchParams) {
 
 function addPaginationControls(searchParams: SearchParams) {
   const { page } = searchParams;
+  const limit = getLimitFromSearchParams(searchParams);
+
+  // If showing all posts, don't use pagination
+  if (limit === "all") {
+    return {
+      limit: 1000, // Use a large number to get all posts
+      skip: 0,
+    };
+  }
+
   if (typeof page === "string") {
     return {
-      limit: PAGINATION_LIMIT,
-      skip: (parseInt(page) - 1) * PAGINATION_LIMIT,
+      limit,
+      skip: (parseInt(page) - 1) * limit,
     };
   }
   return {
-    limit: PAGINATION_LIMIT,
+    limit,
   };
 }
 
-// TODO: currently the max we can fetch is 1000 entries with one request. Add logic to batch requests IF there are more than 1000 entries in total.
 export async function getAllBlogEntries() {
-  const options = {
-    content_type: contentType,
-    "fields.content[exists]": true, // no empty posts
-    order: "-fields.publishDate", // sorted latest first
-    limit: 1000, // max limit
+  const MAX_BATCH_SIZE = 1000; // maximum num of posts we can fetch per request from contentful
+  let skip = 0;
+  let hasMoreEntries = true;
+
+  const allItems = [];
+  let totalItems = 0;
+
+  // Keep fetching batches until we get fewer items than our batch size
+  while (hasMoreEntries) {
+    const options = {
+      content_type: contentType,
+      "fields.content[exists]": true,
+      order: "-fields.publishDate",
+      limit: MAX_BATCH_SIZE,
+      skip,
+    } as const;
+
+    const response =
+      await productionClient.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
+        options,
+      );
+
+    allItems.push(...response.items);
+    totalItems = response.total;
+
+    if (response.items.length < MAX_BATCH_SIZE) {
+      hasMoreEntries = false;
+    } else {
+      skip += MAX_BATCH_SIZE;
+    }
+  }
+
+  return {
+    items: allItems,
+    includes: {},
+    total: totalItems,
+    limit: MAX_BATCH_SIZE,
     skip: 0,
-  } as const;
-  return productionClient.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>(
-    options,
-  );
+  };
 }
 
 export const getBlogEntries = async (

@@ -6,26 +6,12 @@ import { Subscribe } from "./Subscribe";
 import { ButtonScrollTo } from "@/components/ButtonScrollTo";
 import { Filter } from "@/components/Filter";
 import { Suspense } from "react";
-import {
-  canPaginatePrevious,
-  getPaginationControlLink,
-  getPreviousPaginationLink,
-  getPaginationPages,
-  getNextPaginationLink,
-  canPaginateNext,
-} from "@/lib/pagination";
+import { getPaginationPages, getLimitFromSearchParams } from "@/lib/pagination";
 
 import { Metadata } from "next";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { createCacheKey, cn } from "@/lib/utils";
 import { SITE_BASE_URL } from "@/constants/site";
+import { PaginationControls } from "@/components/PaginationControls";
 
 export type SearchParams = Record<string, string | undefined>;
 
@@ -104,12 +90,6 @@ type PostsProps = {
 async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
   const posts = await getBlogEntries(draftModeEnabled, searchParams);
 
-  const pageDetails = {
-    totalPosts: posts.total,
-    pathname: "/",
-    searchParams,
-  };
-
   if (!posts.total) {
     return (
       <h2 className="my-auto flex-1 text-text-secondary text-2xl">
@@ -119,6 +99,9 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
   }
 
   const isSearchResults = Object.values(searchParams).length ? true : false;
+  const currentPage = parseInt(searchParams.page ?? "1");
+  const limit = getLimitFromSearchParams(searchParams);
+  const totalPages = getPaginationPages(posts.total, limit);
 
   return (
     <>
@@ -160,44 +143,15 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
         </>
       ) : null}
 
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              className={cn({
-                "opacity-40": !canPaginatePrevious(pageDetails),
-              })}
-              href={getPreviousPaginationLink(pageDetails)}
-            />
-          </PaginationItem>
-          {Array.from({ length: getPaginationPages(posts.total) }).map(
-            (_, i) => (
-              <PaginationItem key={i}>
-                <PaginationLink
-                  isActive={parseInt(searchParams.page ?? "1") === i + 1}
-                  href={getPaginationControlLink({
-                    ...pageDetails,
-                    paginationControl: {
-                      page: i + 1,
-                    },
-                  })}
-                >
-                  {i + 1}
-                </PaginationLink>
-              </PaginationItem>
-            ),
-          )}
-
-          <PaginationItem>
-            <PaginationNext
-              className={cn({
-                "opacity-40": !canPaginateNext(pageDetails),
-              })}
-              href={getNextPaginationLink(pageDetails)}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      {posts.total > 0 && (
+        <PaginationControls
+          totalPosts={posts.total}
+          pathname="/"
+          searchParams={searchParams}
+          currentPage={currentPage}
+          totalPages={totalPages}
+        />
+      )}
     </>
   );
 }

@@ -1,8 +1,11 @@
 import { SearchParams } from "@/app/page";
 import { UmaBlogEntries } from "./contentful";
 
-// TODO: let user set limit
-export const PAGINATION_LIMIT = 10;
+// Default limit if not specified
+export const DEFAULT_PAGINATION_LIMIT = 10;
+
+// Default number of pagination links to show
+export const DEFAULT_VISIBLE_PAGES = 5;
 
 type ControlOptions = {
   pathname: string;
@@ -10,7 +13,7 @@ type ControlOptions = {
   totalPosts: UmaBlogEntries["total"];
   paginationControl: {
     page: number;
-    // limit: number;
+    limit?: string;
   };
 };
 
@@ -27,8 +30,25 @@ export function getPaginationControlLink({
   } else {
     newParams.set("page", encodeURIComponent(paginationControl.page));
   }
-  // newParams.set("limit", encodeURIComponent(paginationControl.limit));
+
+  if (paginationControl.limit) {
+    newParams.set("limit", encodeURIComponent(paginationControl.limit));
+  }
+
   return `${pathname}?${newParams.toString()}`;
+}
+
+export function getLimitFromSearchParams(
+  searchParams: SearchParams,
+): number | "all" {
+  const newParams = new URLSearchParams(searchParams as ParamsWithValues);
+  const limitAsString = newParams.get("limit");
+
+  if (limitAsString === "all") {
+    return "all";
+  }
+
+  return limitAsString ? parseInt(limitAsString) : DEFAULT_PAGINATION_LIMIT;
 }
 
 export function canPaginatePrevious({
@@ -53,8 +73,14 @@ export function canPaginateNext({
   const newParams = new URLSearchParams(searchParams as ParamsWithValues);
   const pageAsString = newParams.get("page");
   const pageAsInt = pageAsString ? parseInt(pageAsString) : 1;
+  const limit = getLimitFromSearchParams(searchParams);
 
-  return pageAsInt < Math.ceil(totalPosts / PAGINATION_LIMIT);
+  // If showing all posts, there's only one page
+  if (limit === "all") {
+    return false;
+  }
+
+  return pageAsInt < Math.ceil(totalPosts / limit);
 }
 
 export function getPreviousPaginationLink({
@@ -65,6 +91,8 @@ export function getPreviousPaginationLink({
   const newParams = new URLSearchParams(searchParams as ParamsWithValues);
   const pageAsString = newParams.get("page");
   const pageAsInt = pageAsString ? parseInt(pageAsString) : 1;
+  const limitParam = newParams.get("limit") ?? undefined;
+
   if (canPaginatePrevious({ searchParams })) {
     return getPaginationControlLink({
       totalPosts,
@@ -72,6 +100,7 @@ export function getPreviousPaginationLink({
       searchParams,
       paginationControl: {
         page: pageAsInt - 1,
+        limit: limitParam,
       },
     });
   }
@@ -86,6 +115,7 @@ export function getNextPaginationLink({
   const newParams = new URLSearchParams(searchParams as ParamsWithValues);
   const pageAsString = newParams.get("page");
   const pageAsInt = pageAsString ? parseInt(pageAsString) : 1;
+  const limitParam = newParams.get("limit") ?? undefined;
 
   if (canPaginateNext({ searchParams, totalPosts })) {
     return getPaginationControlLink({
@@ -94,6 +124,7 @@ export function getNextPaginationLink({
       searchParams,
       paginationControl: {
         page: pageAsInt + 1,
+        limit: limitParam,
       },
     });
   }
@@ -102,6 +133,34 @@ export function getNextPaginationLink({
 
 export function getPaginationPages(
   totalPosts: UmaBlogEntries["total"],
+  limit: number | "all" = DEFAULT_PAGINATION_LIMIT,
 ): number {
-  return Math.ceil(totalPosts / PAGINATION_LIMIT);
+  if (limit === "all") {
+    return 1;
+  }
+  return Math.ceil(totalPosts / limit);
+}
+
+// ensures we only display a max number of pagination links.
+// keeps the current page's index 1 away from the end
+export function getVisiblePageNumbers(
+  currentPage: number,
+  totalPages: number,
+  maxVisible = DEFAULT_VISIBLE_PAGES, // max number that actually looks good on mobile
+): number[] {
+  if (totalPages <= maxVisible) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  let startPage: number;
+
+  if (currentPage <= Math.ceil(maxVisible / 2)) {
+    startPage = 1;
+  } else if (currentPage > totalPages - Math.floor(maxVisible / 2)) {
+    startPage = totalPages - maxVisible + 1;
+  } else {
+    startPage = currentPage - Math.floor(maxVisible / 2);
+  }
+
+  return Array.from({ length: maxVisible }, (_, i) => startPage + i);
 }
