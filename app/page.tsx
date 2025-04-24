@@ -13,6 +13,7 @@ import {
   getPaginationPages,
   getNextPaginationLink,
   canPaginateNext,
+  getVisiblePageNumbers,
 } from "@/lib/pagination";
 
 import { Metadata } from "next";
@@ -119,6 +120,9 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
   }
 
   const isSearchResults = Object.values(searchParams).length ? true : false;
+  const currentPage = parseInt(searchParams.page ?? "1");
+  const totalPages = getPaginationPages(posts.total);
+  const visiblePages = getVisiblePageNumbers(currentPage, totalPages);
 
   return (
     <>
@@ -164,32 +168,31 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
+              disabled={!canPaginatePrevious(pageDetails)}
               className={cn({
                 "opacity-40": !canPaginatePrevious(pageDetails),
               })}
               href={getPreviousPaginationLink(pageDetails)}
             />
           </PaginationItem>
-          {Array.from({ length: getPaginationPages(posts.total) }).map(
-            (_, i) => (
-              <PaginationItem key={i}>
-                <PaginationLink
-                  isActive={parseInt(searchParams.page ?? "1") === i + 1}
-                  href={getPaginationControlLink({
-                    ...pageDetails,
-                    paginationControl: {
-                      page: i + 1,
-                    },
-                  })}
-                >
-                  {i + 1}
-                </PaginationLink>
-              </PaginationItem>
-            ),
-          )}
-
+          {visiblePages.map((pageNum) => (
+            <PaginationItem key={pageNum}>
+              <PaginationLink
+                isActive={currentPage === pageNum}
+                href={getPaginationControlLink({
+                  ...pageDetails,
+                  paginationControl: {
+                    page: pageNum,
+                  },
+                })}
+              >
+                {pageNum}
+              </PaginationLink>
+            </PaginationItem>
+          ))}
           <PaginationItem>
             <PaginationNext
+              disabled={!canPaginateNext(pageDetails)}
               className={cn({
                 "opacity-40": !canPaginateNext(pageDetails),
               })}

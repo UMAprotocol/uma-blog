@@ -105,3 +105,27 @@ export function getPaginationPages(
 ): number {
   return Math.ceil(totalPosts / PAGINATION_LIMIT);
 }
+
+// ensures we only display a max number of pagination links.
+// keeps the current page's index 1 away from the end
+export function getVisiblePageNumbers(
+  currentPage: number,
+  totalPages: number,
+  maxVisible = 4, // max number that actually looks good on mobile
+): number[] {
+  if (totalPages <= maxVisible) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  let startPage: number;
+
+  if (currentPage <= Math.ceil(maxVisible / 2)) {
+    startPage = 1;
+  } else if (currentPage > totalPages - Math.floor(maxVisible / 2)) {
+    startPage = totalPages - maxVisible + 1;
+  } else {
+    startPage = currentPage - Math.floor(maxVisible / 2);
+  }
+
+  return Array.from({ length: maxVisible }, (_, i) => startPage + i);
+}
