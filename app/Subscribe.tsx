@@ -83,6 +83,7 @@ export function Subscribe({ className }: Props) {
                   name="subscriberEmail"
                   placeholder="example@email.com"
                   type="email"
+                  inputMode="email"
                 />
                 <Button
                   disabled={status !== "IDLE"}
