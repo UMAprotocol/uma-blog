@@ -27,6 +27,7 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "images.ctfassets.net",
+        pathname: `/${process.env.SPACE_ID}/**`,
       },
     ],
   },
