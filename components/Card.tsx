@@ -9,12 +9,12 @@ import { PublishDate } from "./PublishDate";
 import { ReadingTime } from "./ReadingTime";
 
 const imageVariants = cva(
-  "w-full self-stretch col-start-1 col-end-10 rounded-sm",
+  "w-full self-stretch col-start-1 col-end-10 rounded-sm aspect-video",
   {
     variants: {
       size: {
-        small: "@xl:row-start-1 aspect-[2/1] @xl:col-start-6 @xl:col-end-10",
-        large: "@xl:row-start-1 aspect-[1.7/1] @xl:col-start-1 @xl:col-end-6",
+        small: "@xl:row-start-1 @xl:col-start-6 @xl:col-end-10",
+        large: "@xl:row-start-1 @xl:col-start-1 @xl:col-end-6",
       },
     },
     defaultVariants: {
