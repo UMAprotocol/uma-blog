@@ -1,0 +1,5 @@
+# CODEOWNERS file for UMA Blog
+# This file defines who is responsible for reviewing changes to different parts of the codebase
+
+# Global owners - All changes
+* @james-a-morris @gsteenkamp89

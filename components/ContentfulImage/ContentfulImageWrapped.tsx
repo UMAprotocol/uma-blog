@@ -24,7 +24,7 @@ export function ContentfulImageWrapped({
       <div className={cn("relative aspect-[3/2] overflow-hidden", className)}>
         <PlaceholderBlogImage
           className={cn("relative aspect-[3/2] overflow-hidden", {
-            "[&>svg]:transition-transform [&>svg]:group-hover:scale-110 ":
+            "[&>svg]:transition-transform [&>svg]:group-hover:scale-105 ":
               zoomOnHover,
           })}
         />
@@ -32,7 +32,7 @@ export function ContentfulImageWrapped({
     );
   }
 
-  const uniqueImageString = toCSSIdentifier(image.fields.file.fileName);
+  const uniqueImageString = toCSSIdentifier(image.fields.file.url);
 
   return (
     <div
@@ -50,7 +50,7 @@ export function ContentfulImageWrapped({
         fill
         priority={priority}
         className={cn({
-          "transition-transform object-cover group-hover:scale-110":
+          "transition-transform object-cover group-hover:scale-105":
             zoomOnHover,
         })}
         {...image}
