@@ -10,3 +10,9 @@ export const halyardDisplay = localFont({
   display: "swap",
   variable: "--font-halyard-display",
 });
+
+export const inter = localFont({
+  src: "../public/fonts/Inter-variable.ttf",
+  display: "swap",
+  variable: "--font-inter",
+});

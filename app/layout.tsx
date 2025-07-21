@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { halyardDisplay } from "./fonts";
+import { inter, halyardDisplay } from "./fonts";
 import "./globals.css";
 import { Providers } from "../providers/Providers";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -24,7 +24,7 @@ export default function RootLayout({
       <html
         suppressHydrationWarning
         lang="en"
-        className={cn("scroll-smooth", halyardDisplay.variable)}
+        className={cn("scroll-smooth", halyardDisplay.variable, inter.variable)}
       >
         <body className="min-h-dvh h-full items-center flex flex-col bg-background text-text w-screen">
           <Providers>
