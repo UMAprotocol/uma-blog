@@ -47,6 +47,8 @@ export const metadata: Metadata = {
     url: "/",
   },
 };
+// ISR - rebuild on an interval
+export const revalidate = 1800; // 30 minutes
 
 export default function Home({ searchParams }: PageProps) {
   const { isEnabled } = draftMode();
