@@ -27,7 +27,7 @@ export function Header() {
           aria-label="Home"
           type="internal"
           className="w-[80px] h-full relative"
-          href="/"
+          href="https://uma.xyz"
         >
           <span className="sr-only">Home</span>
           <Icon name="uma-logo" className="text-text w-full h-full" />
