@@ -11,6 +11,9 @@ export type TypeAcrossBlogPostFields = {
   content: EntryFieldTypes.RichText;
   featuredImage: EntryFieldTypes.AssetLink;
   tag?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
+  slug?: EntryFieldTypes.Symbol;
+  publishDate: EntryFieldTypes.Date;
+  description: EntryFieldTypes.Symbol;
 };
 
 export type TypeAcrossBlogPostSkeleton = EntrySkeletonType<

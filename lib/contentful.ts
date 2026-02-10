@@ -24,6 +24,12 @@ export const previewClient = createClient({
   host: "preview.contentful.com",
 });
 
+type BlogEntryItem = Awaited<
+  ReturnType<
+    typeof productionClient.withoutUnresolvableLinks.getEntries<TypeBlogPostSkeleton>
+  >
+>["items"][number];
+
 function addProductFilter(searchParams: SearchParams) {
   const product = searchParams.product;
   if (product && typeof product === "string") {
@@ -76,7 +82,7 @@ export async function getAllBlogEntries() {
   let skip = 0;
   let hasMoreEntries = true;
 
-  const allItems = [];
+  const allItems: BlogEntryItem[] = [];
   let totalItems = 0;
 
   // Keep fetching batches until we get fewer items than our batch size

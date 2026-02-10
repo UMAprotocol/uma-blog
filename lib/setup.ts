@@ -1,17 +1,24 @@
 import { env } from "@/app/env";
-import { exec } from "child_process";
+import { execSync } from "child_process";
+
+const typesDir = "types/contentful";
 
 // fetch schema from our space and generate types
-const command = `cf-content-types-generator -s ${env.SPACE_ID} -t ${env.CMA_TOKEN} -X -g -o types/contentful`;
+const generateCommand = `cf-content-types-generator -s ${env.SPACE_ID} -t ${env.CMA_TOKEN} -X -g -o ${typesDir}`;
 
-exec(command, (error, stdout, stderr) => {
-  if (error) {
+try {
+  // build interfaces
+  execSync(generateCommand, { encoding: "utf-8" });
+  // fix lint issues, convert to types
+  execSync(`npx eslint --fix "${typesDir}/**/*.ts"`, { encoding: "utf-8" });
+  // format
+  execSync(
+    `npx prettier --write "${typesDir}/**/*.ts" --config ./prettier.config.mjs`,
+    { encoding: "utf-8" },
+  );
+} catch (error) {
+  if (error instanceof Error) {
     console.error(`Error: ${error.message}`);
-    return;
   }
-  if (stderr) {
-    console.error(`CLI Error: ${stderr}`);
-    return;
-  }
-  console.log(`CLI Output: ${stdout}`);
-});
+  process.exit(1);
+}
