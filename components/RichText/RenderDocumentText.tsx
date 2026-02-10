@@ -16,9 +16,9 @@ import { isExternal } from "../Link";
 import { IframeContainer } from "./IframeContainer";
 import { Code } from "./Code";
 import { Video } from "./Video";
+import { addDefaultProtocol } from "@/lib/utils";
 
 // Map text-format types to custom components
-
 const markRenderers: RenderMark = {
   [MARKS.BOLD]: (text) => <strong>{text}</strong>,
   [MARKS.ITALIC]: (text) => <em>{text}</em>,
@@ -30,7 +30,7 @@ const markRenderers: RenderMark = {
 
 const nodeRenderers: RenderNode = {
   [INLINES.HYPERLINK]: (node, children) => {
-    const href = node.data.uri as string;
+    const href = addDefaultProtocol(node.data.uri as string);
     if (
       href.includes("youtube.com/embed") ||
       href.includes("player.vimeo.com") ||

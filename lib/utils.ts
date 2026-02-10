@@ -41,3 +41,27 @@ export function toCSSIdentifier(fileName: string) {
 
   return cssIdentifier;
 }
+
+/**
+ * Ensures external links use HTTPS. Rewrites http:// to https:// and adds https://
+ * if missing. Preserves relative links (starting with "/") for NextLink.
+ *
+ * @param uri - URI from Contentful (may be missing protocol or have http://)
+ * @returns URI with HTTPS protocol, or unchanged if relative
+ */
+export function addDefaultProtocol(uri: string): string {
+  // handle in-app relative links
+  if (uri.startsWith("/")) {
+    return uri;
+  }
+  // Rewrite http:// to https:// for security
+  if (uri.startsWith("http://")) {
+    return uri.replace("http://", "https://");
+  }
+
+  if (!uri.startsWith("https://")) {
+    return `https://${uri}`;
+  }
+
+  return uri;
+}
