@@ -36,3 +36,9 @@ export type {
 } from "./TypeTestContent";
 export { isTypeUmip } from "./TypeUmip";
 export type { TypeUmip, TypeUmipFields, TypeUmipSkeleton } from "./TypeUmip";
+export { isTypeYouTubeVideo } from "./TypeYouTubeVideo";
+export type {
+  TypeYouTubeVideo,
+  TypeYouTubeVideoFields,
+  TypeYouTubeVideoSkeleton,
+} from "./TypeYouTubeVideo";
