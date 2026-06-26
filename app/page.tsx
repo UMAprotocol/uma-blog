@@ -2,14 +2,13 @@ import { getBlogEntries } from "@/lib/contentful";
 import { draftMode } from "next/headers";
 import { Card } from "@/components/Card";
 import { Divider } from "@/components/Divider";
-import { Subscribe } from "./Subscribe";
 import { ButtonScrollTo } from "@/components/ButtonScrollTo";
 import { Filter } from "@/components/Filter";
 import { Suspense } from "react";
 import { getPaginationPages, getLimitFromSearchParams } from "@/lib/pagination";
 
 import { Metadata } from "next";
-import { createCacheKey, cn } from "@/lib/utils";
+import { createCacheKey } from "@/lib/utils";
 import { SITE_BASE_URL } from "@/constants/site";
 import { PaginationControls } from "@/components/PaginationControls";
 
@@ -118,12 +117,6 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
           href={`/articles/${posts.items[0].fields.slug}`}
           key={posts.items[0].sys.id}
           post={posts.items[0]}
-        />
-        <Subscribe
-          className={cn([
-            "col-span-5 @3xl:aspect-[1.2/1] self-auto @3xl:col-span-1",
-            isSearchResults ? "hidden @3xl:flex" : "visible",
-          ])}
         />
       </div>
 
