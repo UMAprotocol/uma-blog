@@ -136,11 +136,11 @@ export default async function BlogPage({ params: { slug } }: Props) {
         <div className="grid grid-cols-5 gap-6">
           <ContentfulImageWrapped
             priority
-            className="col-span-5 @3xl:col-span-4 aspect-[1.8/1] rounded-xl"
+            className="col-span-5 aspect-[1.8/1] rounded-xl"
             image={post.fields.heroImage}
           />
 
-          <article className="col-span-5 flex @3xl:col-span-4 text-text flex-col gap-6 items-start">
+          <article className="col-span-5 flex text-text flex-col gap-6 items-start">
             <div className="flex flex-col items-start gap-6">
               <div className="flex items-center gap-2">
                 <PublishDate publishDate={post.fields.publishDate} />
@@ -173,7 +173,7 @@ export default async function BlogPage({ params: { slug } }: Props) {
           Related Articles
         </h3>
         <CardCarousel
-          className="col-span-5 @3xl:col-span-4"
+          className="col-span-5"
           posts={morePosts}
         />
 

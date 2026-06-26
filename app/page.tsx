@@ -113,7 +113,7 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
       <div className="grid grid-cols-5 gap-6 w-full">
         <Card
           size={isSearchResults ? "small" : "large"}
-          className="col-span-5 @3xl:col-span-4"
+          className="col-span-5"
           href={`/articles/${posts.items[0].fields.slug}`}
           key={posts.items[0].sys.id}
           post={posts.items[0]}
@@ -124,11 +124,11 @@ async function Posts({ draftModeEnabled, searchParams }: PostsProps) {
         <>
           <div className="w-full grid grid-cols-5 gap-6">
             {!isSearchResults && (
-              <Divider className="col-span-5 @3xl:col-span-4" />
+              <Divider className="col-span-5" />
             )}
             {posts.items.slice(1).map((post) => (
               <Card
-                className="col-span-5 @3xl:col-span-4"
+                className="col-span-5"
                 href={`/articles/${post.fields.slug}`}
                 key={post.sys.id}
                 post={post}
