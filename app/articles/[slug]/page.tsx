@@ -7,7 +7,6 @@ import {
 import { draftMode } from "next/headers";
 import Link from "next/link";
 import { renderDocumentText } from "@/components/RichText/RenderDocumentText";
-import { Subscribe } from "@/app/Subscribe";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -140,7 +139,6 @@ export default async function BlogPage({ params: { slug } }: Props) {
             className="col-span-5 @3xl:col-span-4 aspect-[1.8/1] rounded-xl"
             image={post.fields.heroImage}
           />
-          <Subscribe className="col-span-5 @3xl:aspect-square self-auto @3xl:col-span-1" />
 
           <article className="col-span-5 flex @3xl:col-span-4 text-text flex-col gap-6 items-start">
             <div className="flex flex-col items-start gap-6">
