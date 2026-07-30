@@ -13,9 +13,6 @@ export const env = createEnv({
     PREVIEW_ACCESS_TOKEN: z.string(),
     PREVIEW_SECRET: z.string(),
     REVALIDATE_SECRET: z.string(),
-    MAILCHIMP_API_KEY: z.string(),
-    MAILCHIMP_SERVER_PREFIX: z.string(),
-    MAILCHIMP_LIST_ID: z.string(),
   },
   client: {
     NEXT_PUBLIC_GOOGLE_ANALYTICS_TAG: z.string(),
@@ -28,9 +25,6 @@ export const env = createEnv({
     PREVIEW_ACCESS_TOKEN: process.env.PREVIEW_ACCESS_TOKEN,
     PREVIEW_SECRET: process.env.PREVIEW_SECRET,
     REVALIDATE_SECRET: process.env.REVALIDATE_SECRET,
-    MAILCHIMP_API_KEY: process.env.MAILCHIMP_API_KEY,
-    MAILCHIMP_SERVER_PREFIX: process.env.MAILCHIMP_SERVER_PREFIX,
-    MAILCHIMP_LIST_ID: process.env.MAILCHIMP_LIST_ID,
     NEXT_PUBLIC_GOOGLE_ANALYTICS_TAG:
       process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_TAG,
   },
