@@ -52,9 +52,6 @@ GOOGLE_ANALYTICS_TAG
 PREVIEW_ACCESS_TOKEN
 PREVIEW_SECRET
 REVALIDATE_SECRET
-MAILCHIMP_API_KEY
-MAILCHIMP_SERVER_PREFIX
-MAILCHIMP_LIST_ID
 ```
 
 Env variables are validated at build time and also before starting the dev server. To use env vars throughout the app just import the `env` object exported from `/app/env.ts`

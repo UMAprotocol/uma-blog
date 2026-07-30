@@ -6,14 +6,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export async function sleep(milliseconds: number) {
-  return new Promise((res, _) => {
-    setTimeout(() => {
-      res(true);
-    }, milliseconds);
-  });
-}
-
 export function createCacheKey(options: {
   searchParams: SearchParams;
   draftModeEnabled: boolean;
