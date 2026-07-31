@@ -9,6 +9,7 @@ import { documentToPlainTextString } from "@contentful/rich-text-plain-text-rend
 import { Document } from "@contentful/rich-text-types";
 import { createClient } from "contentful";
 import words from "lodash.words";
+import { cache } from "react";
 import { getLimitFromSearchParams } from "./pagination";
 
 const contentType = "blogPost";
@@ -138,7 +139,11 @@ export const getBlogEntries = async (
   );
 };
 
-export async function getBlogPostBySlug(
+// Wrapped in React `cache()` so generateMetadata and the page render
+// dedupe to a single Contentful call per request. The contentful SDK uses
+// axios (not fetch), so Next.js's automatic request memoization doesn't
+// kick in — `cache()` is what does the dedup here.
+export const getBlogPostBySlug = cache(async function getBlogPostBySlug(
   slug: UmaBlogEntry["fields"]["slug"],
   isDraft: boolean,
 ) {
@@ -153,7 +158,7 @@ export async function getBlogPostBySlug(
       options,
     );
   return entries.total ? entries.items[0] : undefined;
-}
+});
 
 // gets 3 most related articles based on topic tags
 export async function getRelatedPosts(
