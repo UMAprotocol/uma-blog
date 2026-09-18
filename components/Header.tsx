@@ -13,8 +13,8 @@ export const nav = [
     label: "Vote",
   },
   {
-    href: "https://oracle.uma.xyz/",
-    label: "Oracle",
+    href: "https://explorer.uma.xyz/",
+    label: "Explorer",
   },
 ] as const;
 
