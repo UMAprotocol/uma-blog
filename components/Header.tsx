@@ -5,16 +5,12 @@ import { HamburgerButton } from "./HamburgerButton";
 
 export const nav = [
   {
-    href: "https://uma.xyz/",
-    label: "OO",
-  },
-  {
     href: "https://vote.uma.xyz/",
     label: "Vote",
   },
   {
-    href: "https://oracle.uma.xyz/",
-    label: "Oracle",
+    href: "https://explorer.uma.xyz/",
+    label: "Explorer",
   },
 ] as const;
 
